@@ -9,14 +9,12 @@ export function Hero() {
         background: "linear-gradient(180deg, #FFFFFF 0%, var(--color-bg) 100%)",
       }}
     >
-      <Image
-        src={hero.image}
-        alt={hero.imageAlt}
-        width={280}
-        height={180}
-        className="rounded-2xl border-2 border-accent-mint mb-5"
-        style={{ boxShadow: "0 8px 24px rgba(46,125,50,0.15)", objectFit: "cover" }}
-      />
+      <div
+        className="w-[280px] h-[180px] relative rounded-2xl border-2 border-accent-mint mb-5 overflow-hidden"
+        style={{ boxShadow: "0 8px 24px rgba(46,125,50,0.15)" }}
+      >
+        <Image src={hero.image} alt={hero.imageAlt} fill className="object-cover" sizes="280px" priority />
+      </div>
       <div className="inline-block bg-accent-bg border border-accent-mint px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-accent mb-5">
         {hero.badge}
       </div>
