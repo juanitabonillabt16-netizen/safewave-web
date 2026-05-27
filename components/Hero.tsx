@@ -32,7 +32,7 @@ export function Hero() {
           {hero.primaryCta} <span>→</span>
         </a>
         <a
-          href="#programa"
+          href="#como-funciona"
           className="inline-flex items-center gap-2 bg-transparent text-accent px-8 py-4 rounded-[10px] text-base font-semibold border-2 border-accent-mint hover:bg-accent-bg hover:border-accent transition-all"
         >
           {hero.secondaryCta}

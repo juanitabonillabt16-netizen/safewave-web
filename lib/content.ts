@@ -24,8 +24,8 @@ export const brand = {
 
 export const nav = {
   links: [
-    { href: "#programa", label: "Programa" },
     { href: "#como-funciona", label: "Como funciona" },
+    { href: "#sobre", label: "Sobre Juanita" },
     { href: "#faq", label: "FAQ" },
   ],
   cta: "Evaluacion Gratis",
@@ -38,7 +38,7 @@ export const hero = {
   subtitle:
     "Clases privadas en tu piscina. Certificada Cruz Roja. Bilingue. Horarios flexibles. Programa con garantia de resultados.",
   primaryCta: "Agendar Evaluacion Gratis",
-  secondaryCta: "Ver el Programa",
+  secondaryCta: "Como funciona",
   image: "/images/juanita-teaching-1.jpeg",
   imageAlt: "Juanita ensenando natacion a un nino",
   stats: [

@@ -3,7 +3,6 @@ import { Hero } from "@/components/Hero";
 import { TrustBar } from "@/components/TrustBar";
 import { StatsBar } from "@/components/StatsBar";
 import { Problems } from "@/components/Problems";
-import { Program } from "@/components/Program";
 import { WhySafeWave } from "@/components/WhySafeWave";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Gallery } from "@/components/Gallery";
@@ -21,7 +20,6 @@ export default function Home() {
       <TrustBar />
       <StatsBar />
       <Problems />
-      <Program />
       <WhySafeWave />
       <HowItWorks />
       <Gallery />
