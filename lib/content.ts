@@ -4,6 +4,9 @@
  * Este archivo contiene TODO el texto del sitio.
  * Juanita: para cambiar cualquier texto, editar aqui.
  * Para cambiar imagenes: reemplazar archivos en /public/images/
+ *
+ * Ultima actualizacion: 2026-05-28 con respuestas reales de Juanita.
+ * Items pendientes marcados como [VERIFICAR] todavia.
  */
 
 export const brand = {
@@ -13,133 +16,176 @@ export const brand = {
   phone: "+1 786-872-1898",
   phoneDisplay: "786-872-1898",
   whatsapp: "17868721898",
-  whatsappMessage: "Hola, me interesa el Diagnostico SafeWave para mi hijo",
+  whatsappMessage: "Hola, me interesa una clase con SafeWave Academy para mi hijo",
   instagram: "safewave.academy",
   instagramUrl: "https://instagram.com/safewave.academy",
-  email: "hola@safewaveacademy.com",
+  email: "juanitabonillabt16@gmail.com",
   location: "Miami-Dade, FL",
-  redCrossVerifyUrl: "https://www.redcross.org/take-a-class/qrcode?certnumber=01NAPST",
   leadWebhookUrl: "https://asistentenova.app.n8n.cloud/webhook/safewave-lead-web",
 };
 
 export const nav = {
   links: [
+    { href: "#programas", label: "Programas" },
     { href: "#como-funciona", label: "Como funciona" },
     { href: "#sobre", label: "Sobre Juanita" },
-    { href: "#faq", label: "FAQ" },
+    { href: "#faq", label: "Preguntas" },
   ],
-  cta: "Evaluacion Gratis",
+  cta: "Agendar Clase",
 };
 
 export const hero = {
   badge: "Natacion privada a domicilio - Miami, FL",
-  titleStart: "Tu hijo merece aprender a nadar con",
-  titleHighlight: "seguridad, confianza y atencion personalizada.",
+  titleStart: "Tu hijo aprende a nadar con",
+  titleHighlight: "confianza, seguridad y atencion personalizada.",
   subtitle:
-    "Clases privadas en tu piscina. Certificada Cruz Roja. Bilingue. Horarios flexibles. Programa con garantia de resultados.",
-  primaryCta: "Agendar Evaluacion Gratis",
+    "Clases privadas en tu piscina. Un instructor que conoce a tu hijo. Sin grupos. Sin presion. Avanza a su ritmo, sin perder un dia.",
+  primaryCta: "Reservar mi Clase",
   secondaryCta: "Como funciona",
   image: "/images/juanita-teaching-1.jpeg",
   imageAlt: "Juanita ensenando natacion a un nino",
   stats: [
     { number: "1 a 1", label: "Personalizada" },
-    { number: "A domicilio", label: "En tu piscina" },
-    { number: "ES / EN", label: "Bilingue" },
+    { number: "30 min", label: "Por clase" },
+    { number: "En tu piscina", label: "A domicilio" },
   ],
 };
 
 export const trustBar = [
-  {
-    icon: "🛡️",
-    bold: "Certificada",
-    text: "Water Safety Instructor (American Red Cross)",
-    link: { label: "Verificar", href: brand.redCrossVerifyUrl },
-  },
+  { icon: "🏊‍♀️", text: "Especialista en miedo al agua" },
   { icon: "📍", text: brand.location },
-  { icon: "🗣️", text: "Espanol e Ingles" },
+  { icon: "🗣️", text: "Bilingue ES / EN" },
 ];
 
 export const statsBar = [
   { num: "#1", label: "Florida lidera en ahogamientos infantiles" },
   { num: "88%", label: "Reduccion del riesgo con clases formales (NIH)" },
-  { num: "90 dias", label: "Para nadar con seguridad" },
+  { num: "~5 clases", label: "Promedio para perder el miedo al agua" },
 ];
 
 export const problems = {
   label: "Lo que preocupa a los padres",
   title: "La seguridad en el agua no puede esperar",
   subtitle:
-    "En Florida, el ahogamiento es la causa #1 de muerte accidental en ninos menores de 5 anos. Aprender a nadar no es un lujo.",
+    "En Florida, el ahogamiento es la causa #1 de muerte accidental en ninos menores de 5 anos. Aprender a nadar no es un lujo - es seguridad de vida.",
   cards: [
     {
       icon: "😰",
       title: "Mi hijo le tiene miedo al agua",
-      text: "Es mas comun de lo que crees. Con un enfoque progresivo y paciente, la mayoria pierde el miedo en 3-4 clases.",
+      text: "Es lo mas comun. Empezamos por la confianza, no por la tecnica. En unas 5 clases el miedo empieza a soltarse.",
     },
     {
       icon: "👥",
       title: "Las clases grupales no funcionaron",
-      text: "En grupos grandes tu hijo no recibe la atencion que necesita. Cada nino aprende a su ritmo.",
+      text: "En grupos grandes tu hijo no recibe la atencion que necesita. Aqui es 1 a 1 - cada clase es para el.",
     },
     {
       icon: "🚗",
       title: "No tengo tiempo de ir a una academia",
-      text: "Entre el trabajo y las actividades, llevar a tu hijo a una piscina es complicado. Nosotros vamos a ti.",
+      text: "Entre el trabajo y la rutina, manejar es complicado. Yo voy a tu piscina con todo lo necesario.",
     },
     {
-      icon: "🔄",
-      title: "Mi hijo cambia de instructor cada vez",
-      text: "En academias grandes rotan instructores. Con SafeWave, siempre es Juanita - consistencia y confianza.",
+      icon: "🌊",
+      title: "Ya usa flotadores - eso no es nadar",
+      text: "Los flotadores dan falsa seguridad. Trabajamos para que tu hijo nade de verdad, sin depender de ellos.",
     },
   ],
 };
 
 export const program = {
-  label: "El Programa",
-  title: "Programa Nadador Seguro 90",
-  subtitle: "12 clases privadas a domicilio. Tu hijo aprende a nadar con seguridad y confianza en 90 dias.",
-  badge: "MAS POPULAR",
-  features: [
-    { bold: "12 clases privadas", text: "a domicilio en tu piscina (45-60 min cada una)" },
-    { bold: "Diagnostico SafeWave", text: "- evaluacion inicial gratuita" },
-    { bold: "Metodo Ola Suave", text: "- protocolo de 5 fases para eliminar miedo al agua" },
-    { bold: "Mapa de Nado Personal", text: "- roadmap visual de progreso por niveles" },
-    { bold: "Mini Misiones Acuaticas", text: "- 20+ videos para practicar entre clases" },
-    { bold: "Guia Co-Piloto para Papas", text: "- 15 ejercicios de refuerzo" },
-    { bold: "Reporte de Progreso Mensual", text: "- video + escrito de avances" },
-    { bold: 'Certificado "Nadador Seguro"', text: "- al completar el programa" },
-    { bold: "Clase Booster gratis", text: "- sesion de refuerzo 30 dias despues" },
-    { bold: "Garantia Anti-Lluvia", text: "- reagendamiento sin costo" },
+  label: "Programas",
+  title: "Elige el programa que mejor se adapte a tu hijo",
+  subtitle:
+    "Dos formas de empezar. Ambas con clases privadas de 30 minutos en tu piscina, atencion 1 a 1, y enfoque progresivo: primero confianza, despues tecnica.",
+  packages: [
+    {
+      name: "Paquete 10 Clases",
+      tag: "Para empezar bien",
+      price: "$385",
+      priceNote: "Pago unico",
+      duration: "10 clases de 30 min",
+      schedule: "3 semanas (3x semana) o 4 semanas (2x semana)",
+      audience: "Ninos principiantes o que ya tienen base",
+      features: [
+        "Evaluacion inicial sin costo",
+        "Clases personalizadas 1 a 1",
+        "Trabajo en confianza y tecnica",
+        "1 clase extra de garantia si hace falta",
+        "En tu piscina, sin manejar",
+      ],
+      result: "Tu hijo gana confianza y bases solidas en el agua.",
+      cta: "Reservar Paquete 10",
+      featured: false,
+    },
+    {
+      name: "Programa Intensivo",
+      tag: "Mas popular - 12 clases",
+      price: "$429",
+      priceNote: "Pago unico",
+      duration: "12 clases de 30 min",
+      schedule: "Calendario intensivo - ideal verano",
+      audience: "Ninos con miedo o que quieren avanzar rapido",
+      features: [
+        "Evaluacion inicial sin costo",
+        "12 clases personalizadas 1 a 1",
+        "Trabajo intensivo en confianza y tecnica",
+        "Guia para padres con ejercicios de refuerzo",
+        "Certificado al completar el programa",
+        "1 clase extra de garantia si hace falta",
+      ],
+      result: "Tu hijo pasa del miedo a la independencia en el agua.",
+      cta: "Reservar Intensivo",
+      featured: true,
+    },
   ],
-  cta: "Agendar mi Evaluacion Gratuita",
-  ctaSub: "El Diagnostico SafeWave es gratis y sin compromiso. Juanita va a tu piscina.",
-  guarantee: {
-    title: "Garantia Nadador Seguro",
-    text: "Si despues de 12 clases tu hijo no nada 10 metros y flota 30 segundos, Juanita da clases adicionales gratis hasta que lo logre.",
-  },
+  footnote: "Pagos por Zelle o efectivo. Sin contratos largos. Sin sorpresas.",
 };
 
 export const whySafeWave = {
   label: "Por que SafeWave",
   title: "No somos una academia cualquiera",
   cards: [
-    { icon: "🏠", title: "A domicilio - en tu piscina", text: "No manejas a ningun lado. Juanita va a tu casa con todo lo necesario." },
-    { icon: "🎯", title: "100% personalizada", text: "Cada clase se adapta al nivel, ritmo y objetivos del alumno." },
-    { icon: "🛡️", title: "Certificada Cruz Roja", text: "Credencial oficial de la American Red Cross para ensenanza acuatica." },
-    { icon: "🌊", title: "Especialista en miedo al agua", text: "Experiencia con ninos y adultos con miedo o traumas. Enfoque progresivo." },
-    { icon: "🕐", title: "Horarios flexibles", text: "Lunes a viernes 9-6. Sabados y domingos 9-12. Nos adaptamos a ti." },
-    { icon: "🗣️", title: "Bilingue ES / EN", text: "Comunicacion clara con padres y alumnos en su idioma preferido." },
+    {
+      icon: "🏠",
+      title: "A domicilio - en tu piscina",
+      text: "No manejas a ningun lado. Juanita va a tu casa con todo lo necesario.",
+    },
+    {
+      icon: "🎯",
+      title: "100% personalizada 1 a 1",
+      text: "Cada clase se adapta al nivel, ritmo y objetivos de tu hijo. Sin compartir atencion.",
+    },
+    {
+      icon: "💛",
+      title: "Confianza primero",
+      text: "Trabajamos el lado emocional antes que la tecnica. El miedo se va y la tecnica fluye.",
+    },
+    {
+      icon: "🌊",
+      title: "Especialista en miedo al agua",
+      text: "Experiencia con ninos que llegan con miedo fuerte. Enfoque progresivo y respetuoso.",
+    },
+    {
+      icon: "🕐",
+      title: "Horarios flexibles",
+      text: "Nos adaptamos a tu agenda. Lunes a domingo segun disponibilidad.",
+    },
+    {
+      icon: "🗣️",
+      title: "Bilingue ES / EN",
+      text: "Comunicacion clara con padres y alumnos en su idioma preferido.",
+    },
   ],
 };
 
 export const howItWorks = {
   label: "Como funciona",
-  title: "4 pasos para que tu hijo nade con confianza",
+  title: "4 pasos para que tu hijo gane confianza en el agua",
   steps: [
-    { num: 1, title: "Escribenos", text: "Cuentanos la edad, nivel y objetivo de tu hijo." },
-    { num: 2, title: "Diagnostico gratis", text: "Juanita va a tu piscina y evalua a tu hijo en 15 min." },
-    { num: 3, title: "Plan personalizado", text: "Recibe el Mapa de Nado con niveles y timeline." },
-    { num: 4, title: "Tu hijo nada", text: "En 90 dias, seguro y confiado en el agua." },
+    { num: 1, title: "Escribenos", text: "Por WhatsApp. Cuentanos edad, nivel y donde es la piscina." },
+    { num: 2, title: "Primera clase", text: "Juanita va a tu piscina, conoce a tu hijo y evalua su nivel real." },
+    { num: 3, title: "Plan a tu medida", text: "Recomendamos el programa ideal segun lo que vimos en la primera clase." },
+    { num: 4, title: "Tu hijo nada", text: "Confianza primero, tecnica despues. A su ritmo, sin presion." },
   ],
 };
 
@@ -154,30 +200,18 @@ export const gallery = {
   ],
 };
 
+// TEMPORALMENTE OCULTO en page.tsx hasta que Juanita nos pase 4 testimonios mas
+// reales con quotes textuales (los 2 anteriores eran inventados).
 export const testimonials = {
   label: "Lo que dicen las familias",
-  title: "Resultados reales en Miami",
+  title: "Historias reales de familias SafeWave",
   reviews: [
     {
       stars: 5,
-      text: "Mi hija de 4 anos le tenia panico al agua. Despues de 6 clases con Juanita, ya se mete sola y pide mas clases. El cambio fue increible.",
-      author: "Carolina M.",
-      role: "Mama - Doral, FL",
-      initials: "CM",
-    },
-    {
-      stars: 5,
-      text: "Juanita is incredibly patient and professional. My son went from being scared to doing laps in just a few weeks. Highly recommend.",
-      author: "Michael T.",
-      role: "Dad - Coral Gables, FL",
-      initials: "MT",
-    },
-    {
-      stars: 5,
-      text: "Lo mejor es que viene a la casa. No tengo que manejar con los ninos. Mis dos hijos ya nadan solos. Vale cada centavo.",
-      author: "Laura P.",
-      role: "Mama de 2 - Kendall, FL",
-      initials: "LP",
+      text: "Mi hijo Andre no queria estar en el agua sin sus 'alas'. Con Juanita las fue soltando poco a poco y empezo a confiar. Hoy se mete al agua tranquilo, pide entrar el primero. Vale cada peso.",
+      author: "Mama de Andre",
+      role: "Familia SafeWave",
+      initials: "MA",
     },
   ],
 };
@@ -187,53 +221,72 @@ export const about = {
   title: "Conoce a Juanita",
   name: "Juanita Bonilla",
   paragraphs: [
-    "Fundadora de SafeWave Academy. Certificada por la Cruz Roja Americana. Mas de 2 anos ensenando a ninos y adultos a nadar con seguridad y confianza.",
-    "Ha trabajado con alumnos que tenian miedo al agua, ninos con necesidades especiales, y adultos que nunca aprendieron. Su enfoque: primero confianza, despues tecnica.",
+    "Soy la fundadora de SafeWave Academy y la instructora con la que va a trabajar tu hijo en cada clase.",
+    "Empece SafeWave porque me apasiona ayudar a ninos a superar el miedo al agua. En las academias tradicionales muchos ninos no avanzan porque no reciben atencion personalizada - se sienten un numero mas en la fila.",
+    "Aqui es distinto. Vamos a tu piscina, soy yo en cada clase, y empezamos por la parte mas importante: que tu hijo se sienta seguro. La tecnica viene despues, naturalmente.",
   ],
-  credentials: ["Certificada Red Cross", "Miami, FL", "Bilingue ES/EN", "A domicilio", "Todas las edades"],
+  credentials: [
+    "Especialista en miedo al agua",
+    "Miami-Dade, FL",
+    "Bilingue ES/EN",
+    "A domicilio",
+    "Todas las edades",
+  ],
   image: "/images/juanita-headshot.jpg",
 };
 
 export const faq = {
-  label: "Preguntas frecuentes",
-  title: "Respuestas para padres",
+  label: "Lo que mas nos preguntan",
+  title: "Respuestas honestas",
   items: [
     {
-      q: "A partir de que edad pueden empezar?",
-      a: "Todas las edades: bebes con acompanamiento de padres, ninos, adolescentes y adultos.",
-    },
-    {
-      q: "Necesito tener piscina?",
-      a: "Si, las clases son en tu piscina o en una que tengas acceso (comunidad, edificio, etc.).",
+      q: "Esta caro comparado con otras opciones",
+      a: "Lo entiendo. Lo que pagas no son '10 clases' - es atencion 1 a 1, a domicilio, con alguien que conoce a tu hijo. Las clases grupales son mas baratas, pero tu hijo recibe 5 minutos de atencion real en cada una. Aqui son 30 minutos enteros para el. Y son tus hijos - su seguridad en el agua es inversion, no gasto.",
     },
     {
       q: "Mi hijo tiene mucho miedo al agua",
-      a: "Es el caso mas comun. Juanita se especializa en miedo al agua con el Metodo Ola Suave - enfoque progresivo y paciente. La mayoria pierde el miedo en las primeras clases.",
+      a: "Ese es exactamente el caso en el que trabajo mejor. No forzamos nada. Empezamos por jugar fuera del agua, despues borde, despues entrar de la mano. En unas 5 clases la mayoria empieza a meter la cara y soltar el miedo. Es un proceso respetuoso.",
     },
     {
-      q: "Cuanto cuesta?",
-      a: "El Diagnostico SafeWave es gratuito. En esa evaluacion, Juanita te recomienda el programa ideal para tu hijo y te da todos los detalles de inversion. Sin compromiso.",
+      q: "Mi hijo nunca ha nadado",
+      a: "Perfecto - empezamos desde cero, sin que tenga que 'compararse' con nadie. Si no tiene miedo, avanza mas rapido. Si tiene miedo, lo trabajamos primero.",
     },
     {
-      q: "Las clases son en espanol o ingles?",
-      a: "Ambos. Juanita es bilingue y se adapta al idioma que prefieras.",
+      q: "No se si le va a gustar",
+      a: "Por eso la primera clase es la evaluacion - en esa clase voy a tu piscina, conozco a tu hijo, y tu ves como me conecto con el. Si no fluye, no hay compromiso de seguir.",
     },
     {
-      q: "Que incluye cada clase?",
-      a: "45-60 minutos de atencion personalizada, adaptacion al nivel, enfoque en seguridad, y reporte de progreso.",
+      q: "No tengo tiempo de llevarlo a ningun lado",
+      a: "Por eso voy yo a tu piscina. Tu solo tienes que estar (o no, segun la edad). Es la opcion mas comoda - cero traslados, cero estres.",
     },
     {
-      q: "Que zonas cubren?",
-      a: "Miami-Dade: Doral, Kendall, Coral Gables, Brickell, Hialeah, Miami Beach, Aventura, Pinecrest y mas.",
+      q: "Prefiero clases grupales, asi socializa",
+      a: "Lo entiendo. La verdad es que cada nino aprende a su ritmo - en grupos los miedosos se atrasan y los rapidos se aburren. Aqui avanza a SU velocidad, sin frenos ni empujones. Una vez que ya nada con seguridad, las clases grupales para socializar son una excelente opcion.",
+    },
+    {
+      q: "Mi hijo ya usa flotadores, ya nada",
+      a: "Con flotadores no nada - flota. Eso le da una falsa seguridad muy peligrosa: el dia que cae al agua sin ellos, no sabe que hacer. Trabajamos para que pueda flotar y desplazarse sin depender de nada externo.",
+    },
+    {
+      q: "Necesito tener piscina propia?",
+      a: "Si - o piscina de comunidad/edificio. Las clases son siempre en agua que tu hijo conozca, asi se siente mas seguro desde el primer dia.",
+    },
+    {
+      q: "Hablas en espanol o ingles?",
+      a: "Los dos. Me adapto al que prefiera tu hijo y tu familia.",
+    },
+    {
+      q: "Que zonas cubres?",
+      a: "Miami-Dade: Doral, Kendall, Coral Gables, Brickell, Hialeah, Miami Beach, Aventura, Pinecrest, Weston y zonas cercanas.",
     },
   ],
 };
 
 export const finalCta = {
-  titleStart: "Dale a tu hijo el regalo de",
-  titleHighlight: "nadar con seguridad.",
+  titleStart: "Empieza por la primera clase.",
+  titleHighlight: "Ahi sabes si SafeWave es para ti.",
   subtitle:
-    "Agenda el Diagnostico SafeWave gratuito. Nuestra especialista va a tu piscina, evalua a tu hijo en 15 minutos, y te entrega un plan personalizado. Sin costo. Sin compromiso.",
+    "Escribenos por WhatsApp o llena el formulario. Te respondemos rapido para agendar la primera clase con Juanita en tu piscina.",
   form: {
     fullNamePlaceholder: "Tu nombre completo",
     phonePlaceholder: "Tu telefono (ej: 786-555-1234)",
@@ -247,17 +300,17 @@ export const finalCta = {
       { value: "13-17", label: "13 a 17 anos" },
       { value: "adulto", label: "Adulto" },
     ],
-    submitLabel: "Agendar Evaluacion Gratis",
+    submitLabel: "Reservar mi Clase",
     submittingLabel: "Enviando...",
   },
   success: {
     title: "Recibimos tu solicitud",
-    text: "Te llamamos en menos de 3 minutos para coordinar tu Diagnostico SafeWave gratuito. Revisa tu WhatsApp.",
+    text: "Juanita te contacta por WhatsApp en menos de 24 horas para coordinar tu primera clase.",
   },
-  fallback: "Prefieres WhatsApp directo?",
+  fallback: "Prefieres escribir directo por WhatsApp?",
 };
 
 export const footer = {
   copyright: "© 2026 SafeWave Academy. Miami, FL. Todos los derechos reservados.",
-  tagline: "Natacion privada a domicilio · Certificada Cruz Roja · Bilingue ES/EN",
+  tagline: "Natacion privada a domicilio · Miami-Dade · Bilingue ES/EN",
 };
