@@ -102,7 +102,7 @@ export const program = {
       name: "Paquete Esencial",
       tag: "Para probar o miedo inicial",
       price: "$225",
-      priceNote: "Pago unico",
+      priceNote: "Pago unico o 2 pagos de $112.50",
       duration: "5 clases de 30 min",
       schedule: "2 a 3 semanas",
       audience: "Quien quiere probar o ninos con miedo inicial",
@@ -120,7 +120,7 @@ export const program = {
       name: "Paquete 10 Clases",
       tag: "Para empezar bien",
       price: "$385",
-      priceNote: "Pago unico",
+      priceNote: "Pago unico o 2 pagos de $192.50",
       duration: "10 clases de 30 min",
       schedule: "3 semanas (3x semana) o 4 semanas (2x semana)",
       audience: "Ninos principiantes o que ya tienen base",
@@ -139,7 +139,7 @@ export const program = {
       name: "Programa Intensivo",
       tag: "Mas popular - 12 clases",
       price: "$429",
-      priceNote: "Pago unico",
+      priceNote: "Pago unico o 2 pagos de $214.50",
       duration: "12 clases de 30 min",
       schedule: "Calendario intensivo - ideal verano",
       audience: "Ninos con miedo o que quieren avanzar rapido",
@@ -156,7 +156,7 @@ export const program = {
       featured: true,
     },
   ],
-  footnote: "Pagos por Zelle o efectivo. Sin contratos largos. Sin sorpresas.",
+  footnote: "Pago en 1 o 2 partes (sin recargo). Por Zelle o efectivo. Sin contratos largos. Sin sorpresas.",
 };
 
 export const whySafeWave = {
