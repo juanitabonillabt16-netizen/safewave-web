@@ -6,7 +6,7 @@ export function Hero() {
     <section
       className="min-h-[90vh] flex flex-col justify-center items-center text-center px-6 md:px-10 pt-32 pb-20 relative"
       style={{
-        background: "linear-gradient(180deg, #FFFFFF 0%, var(--color-bg) 100%)",
+        background: "linear-gradient(180deg, var(--color-accent-bg) 0%, var(--color-bg) 100%)",
       }}
     >
       <div

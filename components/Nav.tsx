@@ -3,10 +3,10 @@ import { brand, nav } from "@/lib/content";
 
 export function Nav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-4 md:px-10 py-3 flex justify-between items-center bg-white/95 backdrop-blur-xl border-b border-[rgba(46,125,50,0.12)]">
+    <nav className="fixed top-0 left-0 right-0 z-50 px-4 md:px-10 py-3 flex justify-between items-center bg-bg/95 backdrop-blur-xl border-b border-[rgba(139,128,255,0.18)]">
       <div className="flex items-center gap-2.5">
         <Image src="/images/logo-optimized.png" alt={brand.name} width={32} height={32} className="rounded-md" />
-        <span className="text-sm md:text-base font-extrabold text-accent tracking-tight">{brand.short}</span>
+        <span className="text-sm md:text-base font-extrabold text-accent tracking-tight">{brand.name}</span>
       </div>
       <div className="hidden md:flex gap-6">
         {nav.links.map((link) => (
