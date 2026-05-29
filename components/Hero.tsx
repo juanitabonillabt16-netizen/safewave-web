@@ -10,10 +10,10 @@ export function Hero() {
       }}
     >
       <div
-        className="w-[280px] h-[180px] relative rounded-2xl border-2 border-accent-mint mb-5 overflow-hidden"
-        style={{ boxShadow: "0 8px 24px rgba(46,125,50,0.15)" }}
+        className="w-[320px] h-[210px] md:w-[560px] md:h-[360px] relative rounded-2xl border-2 border-accent-mint mb-8 overflow-hidden"
+        style={{ boxShadow: "0 12px 40px rgba(0,0,0,0.4)" }}
       >
-        <Image src={hero.image} alt={hero.imageAlt} fill className="object-cover" sizes="280px" priority />
+        <Image src={hero.image} alt={hero.imageAlt} fill className="object-cover" sizes="(min-width: 768px) 560px, 320px" priority />
       </div>
       <div className="inline-block bg-accent-bg border border-accent-mint px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-accent mb-5">
         {hero.badge}
