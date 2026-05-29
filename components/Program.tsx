@@ -12,7 +12,7 @@ export function Program() {
           <p className="text-base text-text-secondary max-w-[640px] mx-auto leading-[1.7]">{program.subtitle}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mt-10">
           {program.packages.map((pkg) => (
             <div
               key={pkg.name}

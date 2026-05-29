@@ -99,6 +99,24 @@ export const program = {
     "Dos formas de empezar. Ambas con clases privadas de 30 minutos en tu piscina, atencion 1 a 1, y enfoque progresivo: primero confianza, despues tecnica.",
   packages: [
     {
+      name: "Paquete Esencial",
+      tag: "Para probar o miedo inicial",
+      price: "$225",
+      priceNote: "Pago unico",
+      duration: "5 clases de 30 min",
+      schedule: "2 a 3 semanas",
+      audience: "Quien quiere probar o ninos con miedo inicial",
+      features: [
+        "Evaluacion inicial sin costo",
+        "5 clases personalizadas 1 a 1",
+        "Enfoque en confianza y primeras tecnicas",
+        "En tu piscina, sin manejar",
+      ],
+      result: "Tu hijo da el primer paso y pierde el miedo inicial.",
+      cta: "Reservar Esencial",
+      featured: false,
+    },
+    {
       name: "Paquete 10 Clases",
       tag: "Para empezar bien",
       price: "$385",
