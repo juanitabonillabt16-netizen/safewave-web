@@ -279,6 +279,10 @@ export const faq = {
       q: "Que zonas cubres?",
       a: "Miami-Dade: Doral, Kendall, Coral Gables, Brickell, Hialeah, Miami Beach, Aventura, Pinecrest, Weston y zonas cercanas.",
     },
+    {
+      q: "Esta es una pregunta de prueba",
+      a: "Esta es una respuesta de prueba — la vamos a borrar.",
+    },
   ],
 };
 
