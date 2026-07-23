@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeWave Academy — Portal del Instructor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a14;--bg2:#13131f;--bg3:#1b1b2c;
+  --accent:#8b8ff8;--accent2:#6e72e8;--accent-soft:rgba(139,143,248,.14);
+  --text:#ecedf6;--text2:#9a9bb6;--text3:#6c6d85;
+  --border:rgba(139,143,248,.14);
+  --green:#7ee0a8;--green-bg:rgba(126,224,168,.12);
+  --blue:#7fb6f8;--blue-bg:rgba(127,182,248,.12);
+  --purp:#b9a8ff;--purp-bg:rgba(185,168,255,.12);
+  --amber:#f3c969;--amber-bg:rgba(243,201,105,.12);
+  --red:#f38a8a;--red-bg:rgba(243,138,138,.12);
+}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px 70px}
+
+/* LOGIN */
+#lg-overlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0a3d6b,#0f6e56);display:flex;align-items:center;justify-content:center}
+#lg-box{background:var(--bg2);border-radius:18px;padding:30px 26px;width:100%;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#lg-box h1{font-family:'Poppins',sans-serif;font-size:19px;color:var(--accent);margin-bottom:4px}
+#lg-box p{font-size:13px;color:var(--text2);margin-bottom:18px}
+#lg-box label{font-size:13px;color:var(--text2);display:block;margin-bottom:6px}
+#lg-box input{width:100%;padding:11px 13px;margin-bottom:14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:inherit;outline:none}
+#lg-box input:focus{border-color:var(--accent)}
+#lg-err{color:var(--red);font-size:12px;min-height:16px;margin-bottom:6px}
+#lg-btn{width:100%;padding:12px;background:var(--accent);color:#0a0a14;border:none;border-radius:10px;font-weight:700;font-family:'Poppins',sans-serif;font-size:14px;cursor:pointer}
+#lg-btn:disabled{opacity:.55;cursor:default}
+
+/* HERO */
+.hero{position:relative;text-align:center;padding:40px 24px 30px;overflow:hidden;
+  background:radial-gradient(130% 90% at 50% -20%, rgba(139,143,248,.40), rgba(110,114,232,.05) 55%, transparent 72%), var(--bg);}
+.brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:20px}
+.brand .ic{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#1f7a5a,#2bb37e);display:flex;align-items:center;justify-content:center;font-size:16px}
+.brand span{font-family:'Poppins',sans-serif;font-weight:700;font-size:16px;color:var(--accent)}
+.hero h1{font-family:'Poppins',sans-serif;font-weight:800;font-size:24px;color:var(--accent);margin-bottom:6px}
+.hero p{font-size:14px;color:var(--text2)}
+#sb-logout{position:fixed;top:10px;right:10px;z-index:9997;padding:6px 12px;font-size:12px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);border-radius:8px;cursor:pointer;font-family:inherit}
+
+/* HORAS */
+.horas-card{background:linear-gradient(135deg,rgba(126,224,168,.14),rgba(139,143,248,.10));border:1px solid var(--border);border-radius:16px;padding:18px;margin-top:20px}
+.hc-top{display:flex;justify-content:space-between;align-items:center}
+.hc-label{font-size:13px;color:var(--text2);font-weight:500}
+.hc-rango{font-size:12px;color:var(--text3);margin-top:2px}
+.hc-total{font-family:'Poppins',sans-serif;font-size:32px;font-weight:800;color:var(--green)}
+.hc-desglose{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.hd-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text);padding:5px 0}
+.hd-row span:last-child{font-weight:600;color:var(--text2)}
+.hc-vacio{margin-top:10px;font-size:12px;color:var(--text3)}
+
+/* AVISO ATRASADAS */
+.aviso-atras{background:var(--amber-bg);border:1px solid rgba(243,201,105,.35);color:var(--amber);border-radius:12px;padding:12px 14px;font-size:13px;margin-top:16px;line-height:1.5}
+.aviso-atras b{font-weight:700}
+
+/* NAVEGADOR DE SEMANA */
+.sem-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:20px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:8px 10px}
+.sem-btn{width:40px;height:40px;flex-shrink:0;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--accent);font-size:22px;line-height:1;cursor:pointer;font-family:inherit}
+.sem-btn:hover{background:var(--accent-soft)}
+.sem-rango{text-align:center;font-family:'Poppins',sans-serif;font-weight:600;font-size:15px;color:var(--text)}
+.sem-rango span{display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:12px;color:var(--text3);margin-top:1px}
+.sem-hoy{text-align:center;font-size:12px;color:var(--accent);cursor:pointer;margin-top:8px}
+
+/* DÍAS */
+.dia-head{display:flex;align-items:baseline;justify-content:space-between;margin:20px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.dia-head.dia-hoy{border-bottom-color:var(--accent)}
+.dia-nom{font-family:'Poppins',sans-serif;font-weight:700;font-size:16px;color:var(--text)}
+.dia-hoy .dia-nom{color:var(--accent)}
+.dia-cont{font-size:12px;color:var(--text3)}
+.dia-libre{font-size:13px;color:var(--text3);font-style:italic;padding:2px 2px 6px}
+
+/* SECTIONS */
+.sec-t{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin:22px 0 10px}
+.empty{padding:20px;text-align:center;color:var(--text3);font-size:14px;background:var(--bg2);border-radius:14px;border:1px solid var(--border)}
+
+/* CLASE CARD */
+.clase{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-bottom:12px;box-shadow:0 8px 26px rgba(0,0,0,.35)}
+.clase.atrasada{border-color:rgba(243,201,105,.4)}
+.c-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+.c-nombre{font-family:'Poppins',sans-serif;font-size:17px;font-weight:700;color:var(--text)}
+.c-meta{font-size:13px;color:var(--text2);margin-top:2px}
+.c-badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.b-pend{background:var(--amber-bg);color:var(--amber)}
+.b-comp{background:var(--green-bg);color:var(--green)}
+.b-canc{background:var(--red-bg);color:var(--red)}
+.b-rep{background:var(--purp-bg);color:var(--purp)}
+.c-prog{font-size:12px;color:var(--text3);margin-bottom:12px}
+.c-contacto{background:var(--bg3);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:flex;flex-direction:column;gap:7px}
+.c-linea{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text);text-decoration:none}
+a.c-linea:hover{color:var(--accent)}
+.c-ic{font-size:15px;flex-shrink:0}
+.c-row{display:flex;gap:8px;margin-bottom:8px}
+.c-row select,.c-row input,.c-row textarea{flex:1;padding:9px 11px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:13px;font-family:inherit;outline:none}
+.c-row textarea{resize:vertical;min-height:38px}
+.c-save{padding:9px 16px;background:var(--accent);color:#0a0a14;border:none;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}
+.c-save:disabled{opacity:.5;cursor:default}
+/* Botón al Manual de enseñanza (solo visible tras login) */
+.manual-cta{display:flex;align-items:center;gap:14px;text-decoration:none;
+  background:linear-gradient(135deg,rgba(139,143,248,.16),rgba(126,224,168,.07));
+  border:1px solid rgba(139,143,248,.32);border-radius:14px;padding:15px 17px;margin:22px 0 4px;
+  transition:border-color .18s,transform .18s}
+.manual-cta:hover{border-color:var(--accent);transform:translateY(-1px)}
+.manual-cta .mc-ic{font-size:25px;flex-shrink:0;line-height:1}
+.manual-cta .mc-txt{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.manual-cta .mc-txt b{color:var(--text);font-size:15px;font-weight:700}
+.manual-cta .mc-txt small{color:var(--text2);font-size:12.5px;line-height:1.35}
+.manual-cta .mc-go{color:var(--accent);font-size:20px;flex-shrink:0}
+.c-flash{font-size:12px;margin-top:6px;min-height:14px}
+
+/* PROGRESO */
+.prog-toggle{font-size:12px;color:var(--accent);cursor:pointer;margin-top:2px;display:inline-block}
+.prog-box{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.prog-box.open{display:block}
+.skill{margin-bottom:10px}
+.sl{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+.sl input{width:50px;padding:3px 6px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:12px;text-align:center}
+.sbar{height:8px;background:var(--bg3);border-radius:5px;overflow:hidden}
+.sfill{height:100%;border-radius:5px}
+.pfield{margin-bottom:8px}
+.pfield label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px}
+.pfield input{width:100%;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:inherit}
+
+.foot{text-align:center;color:var(--text3);font-size:12px;margin-top:28px;line-height:1.7}
+#sesion{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:9px 12px;margin-top:16px}
+#sesion.admin{border-color:rgba(243,201,105,.4);color:var(--amber)}
+#sesion b{color:var(--text);font-weight:600}
+
+/* CELULAR */
+@media (max-width:520px){
+  .wrap{padding:0 12px 60px}
+  .hero{padding:30px 18px 24px}
+  .hero h1{font-size:22px}
+  .brand{margin-bottom:14px}
+  /* 16px evita que el iPhone haga zoom al tocar un campo */
+  .c-row select,.c-row input,.c-row textarea,#lg-box input{font-size:16px}
+  .c-row select,.c-row input{min-height:44px}
+  .c-save,#lg-btn,#go{min-height:44px}
+  .sem-btn{width:44px;height:44px}
+  .c-linea{font-size:14px}
+  .clase{padding:14px}
+  #sb-logout{top:8px;right:8px;padding:8px 12px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<div id="lg-overlay">
+  <div id="lg-box">
+    <h1>🏊 SafeWave Academy</h1>
+    <p>Portal del instructor</p>
+    <label for="lg-email">Correo</label>
+    <input id="lg-email" type="email" autocomplete="username">
+    <label for="lg-pass">Contraseña</label>
+    <input id="lg-pass" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')sbLogin()">
+    <div id="lg-err"></div>
+    <button id="lg-btn" onclick="sbLogin()">Entrar</button>
+  </div>
+</div>
+
+<button id="sb-logout" style="display:none" onclick="sbLogout()">Salir</button>
+
+<header class="hero">
+  <div class="brand"><span class="ic">🌊</span><span>SafeWave Academy</span></div>
+  <h1>Mis clases</h1>
+  <p>Marca la asistencia y actualiza el progreso de tus alumnos</p>
+</header>
+
+<div class="wrap">
+  <div id="sesion" style="display:none"></div>
+  <a id="manual-link" href="safewave_manual_instructor.html" class="manual-cta" style="display:none">
+    <span class="mc-ic">📘</span>
+    <span class="mc-txt"><b>Manual de enseñanza</b><small>Los 3 niveles, ejercicios, juegos y qué hacer si… — tu guía SafeWave</small></span>
+    <span class="mc-go">→</span>
+  </a>
+  <div id="out"><div class="empty">Cargando tus clases…</div></div>
+  <div class="foot">SafeWave Academy · Miami-Dade, FL</div>
+</div>
+
+<script>
+const SB_URL='https://yfcvvtvvoqndwazprnul.supabase.co';
+const SB_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlmY3Z2dHZ2b3FuZHdhenBybnVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNzM5OTEsImV4cCI6MjA5NzY0OTk5MX0.53eNjNrhTVnw_UXnVLB2Ol7MtH5pIgp35eZtmYfrqs4';
+const sb=supabase.createClient(SB_URL,SB_ANON);
+
+const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+function hoyISO(){return new Date().toISOString().split('T')[0];}
+function fmtFecha(f){const d=new Date(f+'T00:00:00');return DIAS[d.getDay()]+' '+d.getDate()+' '+MES[d.getMonth()];}
+function fmtHora(h){if(!h)return'';const[H,M]=h.split(':');const n=+H;return((n%12)||12)+':'+M+(n>=12?'pm':'am');}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function badgeClass(est){return{Pendiente:'b-pend',Completada:'b-comp',Cancelada:'b-canc',Reprogramada:'b-rep'}[est]||'b-pend';}
+
+let ALUMNOS={}, PROGRESO={}, TODAS=[], semanaOffset=0;
+
+async function sbLogin(){
+  const email=document.getElementById('lg-email').value.trim();
+  const pass=document.getElementById('lg-pass').value;
+  const err=document.getElementById('lg-err');const btn=document.getElementById('lg-btn');
+  err.textContent='';btn.disabled=true;btn.textContent='Entrando…';
+  const res=await sb.auth.signInWithPassword({email,password:pass});
+  btn.disabled=false;btn.textContent='Entrar';
+  if(res.error){err.textContent='No se pudo entrar: '+res.error.message;return;}
+  document.getElementById('lg-overlay').style.display='none';
+  document.getElementById('sb-logout').style.display='block';
+  document.getElementById('manual-link').style.display='flex';
+  await cargar();
+}
+async function sbLogout(){await sb.auth.signOut();location.reload();}
+async function sbInit(){
+  const s=await sb.auth.getSession();
+  if(s.data&&s.data.session){
+    document.getElementById('lg-overlay').style.display='none';
+    document.getElementById('sb-logout').style.display='block';
+    document.getElementById('manual-link').style.display='flex';
+    await cargar();
+  }
+}
+sbInit();
+
+async function mostrarSesion(){
+  const el=document.getElementById('sesion');
+  if(!el)return;
+  const s=await sb.auth.getSession();
+  const user=s.data&&s.data.session&&s.data.session.user;
+  if(!user){el.style.display='none';return;}
+  let rol='empleado', nombre='';
+  const pf=await sb.from('perfiles').select('rol,nombre').eq('id',user.id).maybeSingle();
+  if(pf.data){rol=pf.data.rol||'empleado';nombre=pf.data.nombre||'';}
+  el.style.display='flex';
+  if(rol==='admin'){
+    el.classList.add('admin');
+    el.innerHTML='⚠️ Estás dentro como <b>ADMIN</b> ('+escapeHtml(user.email||'')+'). Ves TODAS las clases. Para ver como la instructora, dale <b>Salir</b> y entra con su cuenta.';
+  }else{
+    el.classList.remove('admin');
+    el.innerHTML='👤 Instructor'+(nombre?': <b>'+escapeHtml(nombre)+'</b>':'')+' ('+escapeHtml(user.email||'')+')';
+  }
+}
+
+async function cargar(){
+  const out=document.getElementById('out');
+  out.innerHTML='<div class="empty">Cargando tus clases…</div>';
+  mostrarSesion();
+  try{
+    const [ag,al,pr]=await Promise.all([
+      sb.from('agenda').select('*'),
+      sb.from('alumnos_instructor').select('*'),
+      sb.from('progreso_publico').select('*'),
+    ]);
+    if(ag.error)throw ag.error;
+    ALUMNOS={};(al.data||[]).forEach(a=>ALUMNOS[a.nom]=a);
+    PROGRESO={};(pr.data||[]).forEach(p=>PROGRESO[p.cid]=p);
+    TODAS=(ag.data||[]);
+    if(!TODAS.length){out.innerHTML='<div class="empty">🏝️ No tienes clases asignadas todavía.<br>Pídele a Juanita que te asigne alumnos en el dashboard.</div>';return;}
+    render();
+  }catch(e){
+    out.innerHTML='<div class="empty">⚠️ Hubo un problema al cargar tus clases.<br>'+escapeHtml(e.message||String(e))+'</div>';
+  }
+}
+
+function cambiarSemana(delta){semanaOffset+=delta;render();}
+function semanaHoy(){semanaOffset=0;render();}
+
+function render(){
+  const out=document.getElementById('out');
+  const hoy=hoyISO();
+  const ini=sumarDiasISO(inicioSemanaISO(hoy), semanaOffset*7);
+  const fin=sumarDiasISO(ini,6);
+  const rango=(iso=>{const d=new Date(iso+'T00:00:00');return d.getDate()+' '+MES[d.getMonth()];});
+
+  let html=resumenHoras(TODAS, ini, fin);
+
+  // Aviso de clases sin marcar que ya pasaron (siempre visible, no depende de la semana que mira)
+  const atrasadas=TODAS.filter(c=>c.est==='Pendiente'&&c.fec<hoy);
+  if(atrasadas.length){
+    html+='<div class="aviso-atras">⚠️ Tienes <b>'+atrasadas.length+'</b> clase'+(atrasadas.length!==1?'s':'')+' de días que ya pasaron sin marcar. Búscalas abajo (borde amarillo) y márcalas.</div>';
+  }
+
+  // Navegador de semana
+  html+=`<div class="sem-nav">
+    <button class="sem-btn" onclick="cambiarSemana(-1)">‹</button>
+    <div class="sem-rango">${semanaOffset===0?'Esta semana':(semanaOffset===1?'Próxima semana':(semanaOffset===-1?'Semana pasada':rango(ini)+' – '+rango(fin)))}<span>${rango(ini)} – ${rango(fin)}</span></div>
+    <button class="sem-btn" onclick="cambiarSemana(1)">›</button>
+  </div>`;
+  if(semanaOffset!==0) html+='<div class="sem-hoy" onclick="semanaHoy()">↺ Volver a esta semana</div>';
+
+  // 7 días, lunes a domingo
+  for(let i=0;i<7;i++){
+    const f=sumarDiasISO(ini,i);
+    const d=new Date(f+'T00:00:00');
+    const dia=DIAS[d.getDay()];
+    const diaCap=dia.charAt(0).toUpperCase()+dia.slice(1);
+    const esHoy=f===hoy;
+    const clasesDia=TODAS.filter(c=>c.fec===f).sort((a,b)=>(a.hora||'').localeCompare(b.hora||''));
+    html+=`<div class="dia-head${esHoy?' dia-hoy':''}">
+      <span class="dia-nom">${diaCap} ${d.getDate()} ${MES[d.getMonth()]}${esHoy?' · hoy':''}</span>
+      <span class="dia-cont">${clasesDia.length?clasesDia.length+' clase'+(clasesDia.length!==1?'s':''):'Libre'}</span>
+    </div>`;
+    if(clasesDia.length){
+      html+=clasesDia.map(c=>tarjeta(c,hoy,c.est==='Pendiente'&&c.fec<hoy)).join('');
+    }else{
+      html+='<div class="dia-libre">Sin clases este día</div>';
+    }
+  }
+
+  out.innerHTML=html;
+  requestAnimationFrame(()=>document.querySelectorAll('.sfill').forEach(b=>b.style.width=b.dataset.w+'%'));
+}
+
+function inicioSemanaISO(baseIso){const x=new Date(baseIso+'T00:00:00');const off=(x.getDay()+6)%7;x.setDate(x.getDate()-off);return x.toISOString().split('T')[0];}
+function sumarDiasISO(iso,n){const x=new Date(iso+'T00:00:00');x.setDate(x.getDate()+n);return x.toISOString().split('T')[0];}
+function horasDeClases(clases){
+  const grupos={};
+  clases.forEach((c,idx)=>{
+    const alu=ALUMNOS[c.nin]||{};
+    const zona=(alu.zona||'').trim().toLowerCase();
+    const key=zona?(c.fec+'||'+zona):('__solo__'+c.fec+'__'+idx);
+    (grupos[key]=grupos[key]||[]).push(c);
+  });
+  let horas=0;
+  Object.values(grupos).forEach(g=>{horas+=g.length===1?1:g.length*0.5;});
+  return horas;
+}
+function fmtHoras(h){return (Math.round(h*10)/10).toString().replace('.',',')+' h';}
+function resumenHoras(todasClases, ini, fin){
+  const rango=(iso=>{const d=new Date(iso+'T00:00:00');return d.getDate()+' '+MES[d.getMonth()];});
+  const comps=todasClases.filter(c=>c.est==='Completada'&&c.fec>=ini&&c.fec<=fin);
+  const total=horasDeClases(comps);
+  // Desglose por día
+  const porDia={};
+  comps.forEach(c=>{(porDia[c.fec]=porDia[c.fec]||[]).push(c);});
+  const dias=Object.keys(porDia).sort().map(f=>{
+    const d=new Date(f+'T00:00:00');
+    return `<div class="hd-row"><span>${DIAS[d.getDay()]} ${d.getDate()} ${MES[d.getMonth()]}</span><span>${fmtHoras(horasDeClases(porDia[f]))}</span></div>`;
+  }).join('');
+  return `<div class="horas-card">
+    <div class="hc-top">
+      <div>
+        <div class="hc-label">Horas trabajadas</div>
+        <div class="hc-rango">${rango(ini)} – ${rango(fin)}</div>
+      </div>
+      <div class="hc-total">${fmtHoras(total)}</div>
+    </div>
+    ${dias?'<div class="hc-desglose">'+dias+'</div>':'<div class="hc-vacio">No hay clases completadas en esta semana.</div>'}
+  </div>`;
+}
+
+function tarjeta(c,hoy,atrasada){
+  const alumno=ALUMNOS[c.nin]||{};
+  const total=parseInt(alumno.paq)||0, usadas=alumno.us||0;
+  const progTxt=total>0?(usadas+' de '+total+' clases del paquete'):'Paquete por confirmar';
+  const skillsHtml=skillsSection(alumno);
+  return `<div class="clase${atrasada?' atrasada':''}" id="clase-${c.id}">
+    <div class="c-top">
+      <div>
+        <div class="c-nombre">${escapeHtml(c.nin)}</div>
+        <div class="c-meta">${fmtFecha(c.fec)} · ${fmtHora(c.hora)}${c.niv?' · '+escapeHtml(c.niv):''}</div>
+      </div>
+      <span class="c-badge ${badgeClass(c.est)}">${c.est}</span>
+    </div>
+    <div class="c-prog">${progTxt}</div>
+    ${(alumno.zona||alumno.con)?`<div class="c-contacto">
+      ${alumno.zona?`<a class="c-linea" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(alumno.zona)}" target="_blank" rel="noopener"><span class="c-ic">📍</span><span>${escapeHtml(alumno.zona)}</span></a>`:''}
+      ${alumno.con?`<div class="c-linea"><span class="c-ic">📞</span><span>${escapeHtml(alumno.con)}</span></div>`:''}
+    </div>`:''}
+    <div class="c-row">
+      <select id="est-${c.id}">
+        <option${c.est==='Pendiente'?' selected':''}>Pendiente</option>
+        <option${c.est==='Completada'?' selected':''}>Completada</option>
+        <option${c.est==='Cancelada'?' selected':''}>Cancelada</option>
+        <option${c.est==='Reprogramada'?' selected':''}>Reprogramada</option>
+      </select>
+    </div>
+    <div class="c-row">
+      <textarea id="not-${c.id}" placeholder="Nota de la clase (opcional)">${escapeHtml(c.notas||'')}</textarea>
+    </div>
+    <div class="c-row">
+      <button class="c-save" onclick="guardarClase(${c.id})">Guardar</button>
+    </div>
+    <div class="c-flash" id="flash-${c.id}"></div>
+    ${alumno.id?`<span class="prog-toggle" onclick="toggleProg(${alumno.id})">🏊 Ver / editar progreso de ${escapeHtml(c.nin.split(' ')[0])}</span>
+    <div class="prog-box" id="prog-${alumno.id}">${skillsHtml}</div>`:''}
+  </div>`;
+}
+
+const SKILLS=[['flo','Flotación','#1d9e75'],['resp','Respiración','#378add'],['pat','Patada','#7f77dd'],['conf','Confianza','#ba7517'],['rsi','Resistencia','#d4537e']];
+
+function skillsSection(alumno){
+  if(!alumno.id) return '';
+  const p=PROGRESO[alumno.id]||{};
+  const bars=SKILLS.map(([k,label,color])=>{
+    const v=Math.max(0,Math.min(100,+p[k]||0));
+    return `<div class="skill"><div class="sl"><span>${label}</span><input type="number" min="0" max="100" id="p-${k}-${alumno.id}" value="${v}"></div>
+      <div class="sbar"><div class="sfill" data-w="${v}" style="width:0%;background:${color}"></div></div></div>`;
+  }).join('');
+  return `<div class="pfield"><label>Ya domina</label><input id="p-dom-${alumno.id}" value="${escapeHtml(p.dom||'')}"></div>
+    <div class="pfield"><label>Meta actual</label><input id="p-met-${alumno.id}" value="${escapeHtml(p.met||'')}"></div>
+    <div class="pfield"><label>Estado</label><input id="p-est-${alumno.id}" value="${escapeHtml(p.est||'En progreso')}"></div>
+    ${bars}
+    <button class="c-save" onclick="guardarProgreso(${alumno.id})">Guardar progreso</button>
+    <div class="c-flash" id="pflash-${alumno.id}"></div>`;
+}
+
+function toggleProg(cid){document.getElementById('prog-'+cid).classList.toggle('open');document.querySelectorAll('#prog-'+cid+' .sfill').forEach(b=>b.style.width=b.dataset.w+'%');}
+
+async function guardarClase(id){
+  const est=document.getElementById('est-'+id).value;
+  const notas=document.getElementById('not-'+id).value.trim();
+  const flash=document.getElementById('flash-'+id);
+  flash.textContent='Guardando…';flash.style.color='var(--text3)';
+  const r=await sb.rpc('marcar_clase',{p_agenda_id:id,p_estado:est,p_notas:notas});
+  if(r.error){flash.textContent='⚠️ '+r.error.message;flash.style.color='var(--red)';return;}
+  flash.textContent='✔ Guardado';flash.style.color='var(--green)';
+  setTimeout(()=>cargar(),700);
+}
+
+async function guardarProgreso(cid){
+  const val=k=>+document.getElementById('p-'+k+'-'+cid).value||0;
+  const txt=k=>document.getElementById('p-'+k+'-'+cid).value.trim();
+  const flash=document.getElementById('pflash-'+cid);
+  flash.textContent='Guardando…';flash.style.color='var(--text3)';
+  const r=await sb.rpc('actualizar_progreso',{
+    p_cid:cid,p_dom:txt('dom'),p_met:txt('met'),p_est:txt('est'),
+    p_flo:val('flo'),p_resp:val('resp'),p_pat:val('pat'),p_conf:val('conf'),p_rsi:val('rsi')
+  });
+  if(r.error){flash.textContent='⚠️ '+r.error.message;flash.style.color='var(--red)';return;}
+  flash.textContent='✔ Progreso guardado';flash.style.color='var(--green)';
+}
+</script>
+</body>
+</html>
