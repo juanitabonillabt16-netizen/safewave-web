@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a3d6b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Manual del Instructor · SafeWave Academy</title>
+<style>
+/* =========================================================================
+   SISTEMA VISUAL — no hace falta tocar nada de aquí para cambiar contenido
+   ========================================================================= */
+:root{
+  /* Paleta oscura SafeWave — los mismos colores del Portal de Padres */
+  --bg:#0a0a14; --crema:#242438; --tinta:#ecedf6; --oceano:#8b8ff8; --verde:#7ee0a8;
+  --n1:#6ddb9e; --n2:#6ba4f7; --n3:#b98cf8; --coral:#f87a63; --ambar:#f0c674; --agua:#8fb6bd;
+  --papel:#14141f; --linea:#2b2b3d; --suave:#9a99ac;
+  --r-sm:10px; --r-md:16px; --r-lg:22px;
+  --e:cubic-bezier(.16,1,.3,1);
+  --nav-h:calc(66px + env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--tinta);
+  font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:17px;line-height:1.55;padding-bottom:var(--nav-h);
+}
+body::before{
+  content:'';position:fixed;inset:0 0 auto 0;height:340px;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(130% 90% at 50% 0%, rgba(139,143,248,.20), transparent 66%),
+    radial-gradient(90% 70% at 88% 3%, rgba(126,224,168,.08), transparent 60%);
+}
+#app{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 16px}
+
+header{padding:22px 0 14px}
+.marca{display:flex;align-items:center;gap:9px}
+.marca b{font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--oceano);font-weight:800}
+h1{font-size:clamp(28px,8vw,38px);line-height:1.05;margin:12px 0 6px;letter-spacing:-.025em;color:var(--oceano)}
+.regla{
+  font-size:14.5px;color:var(--agua);font-weight:600;margin:0 0 16px;
+  padding-left:12px;border-left:3px solid var(--agua);line-height:1.45;
+}
+.buscar{position:relative;margin-bottom:6px}
+.buscar input{
+  width:100%;padding:15px 46px 15px 17px;font-size:17px;font-family:inherit;
+  border:2px solid var(--linea);border-radius:var(--r-lg);background:var(--papel);
+  color:var(--tinta);transition:border-color .2s var(--e);
+}
+.buscar input:focus{outline:none;border-color:var(--oceano)}
+.buscar input::placeholder{color:var(--suave)}
+.buscar svg{position:absolute;right:17px;top:50%;transform:translateY(-50%);opacity:.45}
+/* Sello de confidencialidad — aparece en el encabezado de cada pestaña */
+.sello{display:flex;align-items:center;gap:8px;justify-content:center;margin:13px 0 2px;padding:9px 13px;
+  border:1px solid var(--linea);border-radius:var(--r-sm);background:rgba(143,182,189,.05);
+  font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--suave);text-align:center;line-height:1.55}
+.sello svg{flex-shrink:0;opacity:.6}
+
+/* ---------- Tarjetas ---------- */
+.tarjeta{background:var(--papel);border:1.5px solid var(--linea);border-radius:var(--r-md);margin-bottom:11px;overflow:hidden}
+.cab{
+  display:flex;align-items:center;gap:13px;width:100%;padding:17px 16px;
+  background:none;border:0;font-family:inherit;font-size:17.5px;font-weight:700;
+  color:var(--tinta);text-align:left;cursor:pointer;line-height:1.3;
+}
+.cab .flecha{margin-left:auto;flex-shrink:0;transition:transform .3s var(--e);opacity:.5}
+.cab[aria-expanded="true"] .flecha{transform:rotate(90deg)}
+.cuerpo{display:none;padding:0 16px 6px;border-top:1.5px solid var(--linea)}
+.cuerpo.abierto{display:block;animation:entra .35s var(--e)}
+@keyframes entra{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
+
+/* ---------- Niveles ---------- */
+.nivel{border-radius:var(--r-lg);border-width:2px}
+.nivel .cab{padding:19px 17px;align-items:flex-start}
+.insignia{width:44px;height:44px;border-radius:13px;flex-shrink:0;color:#fff;display:grid;place-items:center;font-size:21px;font-weight:800}
+.nivel-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.nivel-txt .t{font-size:19px;letter-spacing:-.01em}
+.nivel-txt .s{font-size:14px;font-weight:500;color:var(--suave);line-height:1.35}
+.n1 .insignia{background:var(--n1)} .n1{border-color:var(--n1)} .n1 .cab .t{color:var(--n1)}
+.n2 .insignia{background:var(--n2)} .n2{border-color:var(--n2)} .n2 .cab .t{color:var(--n2)}
+.n3 .insignia{background:var(--n3)} .n3{border-color:var(--n3)} .n3 .cab .t{color:var(--n3)}
+.intro{font-size:15.5px;color:var(--suave);padding:15px 0 4px;line-height:1.5}
+
+/* ---------- Sub-bloques dentro del nivel ---------- */
+.sub{border:1.5px solid var(--linea);border-radius:var(--r-sm);margin:10px 0;overflow:hidden;background:var(--papel)}
+.sub .cab{padding:14px;font-size:16.5px;gap:11px}
+.etiq{
+  font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  padding:5px 9px;border-radius:7px;background:var(--crema);color:var(--suave);flex-shrink:0;
+}
+
+/* ---------- Listas de ejercicios ---------- */
+ul.ejs{list-style:none;margin:14px 0;padding:0}
+ul.ejs li{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--linea);font-size:16px;line-height:1.45}
+ul.ejs li:last-child{border-bottom:0}
+ul.ejs .punto{width:23px;height:23px;border-radius:50%;background:var(--crema);color:var(--oceano);font-size:12px;font-weight:800;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+ul.ejs .nom{font-weight:700;display:block}
+ul.ejs .como{display:block;font-size:15px;color:var(--suave);margin-top:3px;line-height:1.45}
+ul.ejs li.estrella{background:rgba(240,198,116,.10);margin:0 -16px;padding:14px 16px}
+ul.ejs li.estrella .punto{background:var(--ambar);color:#fff}
+ul.ejs li.estrella .nom{color:var(--ambar)}
+
+.nota{background:rgba(240,198,116,.09);border-left:4px solid var(--ambar);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:13px 15px;margin:4px 0 16px;font-size:15.5px;line-height:1.5}
+.nota b{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--ambar);margin-bottom:5px}
+.aviso{background:rgba(107,164,247,.11);border-left:4px solid var(--n2);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:13px 15px;margin:14px 0;font-size:15.5px;line-height:1.5}
+.aviso b{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--n2);margin-bottom:5px}
+
+/* ---------- Ruta de clases ---------- */
+.clase-r{padding:15px 0;border-bottom:1.5px solid var(--linea)}
+.clase-r:last-child{border-bottom:0}
+.clase-r h4{margin:0 0 4px;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--suave)}
+.clase-r .foco{font-size:17px;font-weight:700;color:var(--oceano);display:block;margin-bottom:9px;line-height:1.3}
+.clase-r ol{margin:0;padding-left:20px;font-size:15.5px;line-height:1.5}
+.clase-r ol li{padding:3px 0}
+.clase-r .jg{display:block;margin-top:9px;font-size:15px;color:var(--verde);font-weight:600}
+
+/* ---------- Criterios y juegos ---------- */
+.check{list-style:none;margin:0;padding:0}
+.check li{display:flex;gap:11px;align-items:flex-start;padding:9px 0;font-size:16px;line-height:1.45}
+.check .tick{width:21px;height:21px;flex-shrink:0;margin-top:2px;color:var(--verde)}
+
+/* ---------- Protocolos (pestaña Ayuda) ---------- */
+.ayuda{border-color:rgba(248,122,99,.42)}
+.ayuda .cab{color:var(--coral)}
+.paso{list-style:none;counter-reset:p;margin:14px 0;padding:0}
+.paso li{counter-increment:p;position:relative;padding:0 0 14px 38px;font-size:16px;line-height:1.5}
+.paso li::before{content:counter(p);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;font-size:13px;font-weight:800;display:grid;place-items:center}
+.nunca{background:rgba(248,122,99,.11);border-radius:var(--r-sm);padding:13px 15px;margin:2px 0 16px;font-size:15.5px;line-height:1.5}
+.nunca b{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--coral);margin-bottom:5px}
+
+/* ---------- Errores ---------- */
+.senales{border-color:var(--ambar);border-width:2px}
+.senales > .cab{color:var(--ambar)}
+.err{padding:15px 0;border-bottom:1.5px solid var(--linea)}
+.err:last-child{border-bottom:0}
+.err h4{margin:0 0 9px;font-size:16.5px;color:var(--coral);line-height:1.35}
+.err dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:7px 12px;font-size:15.5px;line-height:1.45}
+.err dt{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--suave);padding-top:3px;white-space:nowrap}
+.err dd{margin:0}
+
+/* ---------- Pendientes ---------- */
+.pend{text-align:center;padding:40px 22px;color:var(--suave);line-height:1.65;font-size:16px}
+.pend strong{display:block;color:var(--oceano);font-size:19px;margin-bottom:8px}
+.pend span{display:inline-block;margin-top:14px;padding:9px 16px;border-radius:var(--r-lg);background:rgba(240,198,116,.12);color:var(--ambar);font-size:14.5px;font-weight:700}
+
+/* ---------- Navegación ---------- */
+nav{position:fixed;bottom:0;left:0;right:0;z-index:50;display:flex;background:rgba(16,16,26,.9);backdrop-filter:blur(14px);border-top:1.5px solid var(--linea);padding-bottom:env(safe-area-inset-bottom)}
+nav button{
+  flex:1;padding:10px 4px 11px;background:none;border:0;font-family:inherit;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-size:11.5px;font-weight:700;color:var(--suave);letter-spacing:.02em;
+  border-top:3px solid transparent;margin-top:-1.5px;transition:color .2s var(--e);
+}
+nav button svg{width:23px;height:23px}
+nav button[aria-current="true"]{color:var(--oceano);border-top-color:var(--oceano)}
+nav button.sos{color:var(--coral)}
+nav button.sos[aria-current="true"]{border-top-color:var(--coral)}
+
+.vista{display:none}
+.vista.activa{display:block;animation:sube .4s var(--e)}
+@keyframes sube{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.oculto{display:none !important}
+.vacio{text-align:center;color:var(--suave);padding:38px 20px;font-size:16px;line-height:1.9}
+.salto{display:inline-block;margin:9px 4px 0;padding:11px 18px;border:2px solid var(--oceano);background:var(--papel);color:var(--oceano);border-radius:var(--r-lg);font-family:inherit;font-size:15.5px;font-weight:700;cursor:pointer;transition:background .2s var(--e),color .2s var(--e)}
+.salto:hover,.salto:focus-visible{background:var(--oceano);color:#fff;outline:none}
+.pie{text-align:center;color:var(--suave);font-size:14px;padding:26px 10px 12px;line-height:1.6}
+.pie em{color:var(--verde);font-style:normal;font-weight:600}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="marca">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M2 17c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2" stroke="#8b8ff8" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M2 12c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2" stroke="#7ee0a8" stroke-width="2.2" stroke-linecap="round" opacity=".75"/>
+        <circle cx="15.5" cy="6" r="2.6" fill="#7ee0a8"/>
+      </svg>
+      <b>SafeWave Academy</b>
+    </div>
+    <h1>Manual del Instructor</h1>
+    <p class="regla" id="regla"></p>
+    <div class="buscar">
+      <input id="q" type="search" placeholder="Buscar: aritos, carita, tabla…" autocomplete="off" aria-label="Buscar en el manual">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" stroke="#9a99ac" stroke-width="2.2"/><path d="m20 20-3.5-3.5" stroke="#9a99ac" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="sello">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+      Confidencial · Método propio de SafeWave Academy · Prohibida su reproducción
+    </div>
+  </header>
+  <main>
+    <section id="v-clases"  class="vista activa"></section>
+    <section id="v-errores" class="vista"></section>
+    <section id="v-ayuda"   class="vista"></section>
+    <p class="pie"><em id="lema"></em><br>© SafeWave Academy · Material confidencial de uso interno · Prohibida su reproducción</p>
+  </main>
+</div>
+<nav id="nav" aria-label="Secciones del manual"></nav>
+
+<script>
+/* =========================================================================
+   ZONA EDITABLE — todo el contenido del manual vive aquí abajo.
+   Para cambiar un ejercicio o un tip, edita solo este bloque, guarda, y
+   vuelve a abrir el archivo. No hay que tocar nada más.
+   ========================================================================= */
+const DATOS = {
+
+  regla: "30 minutos · 3 ejercicios + 1 juego al final · 7-8 repeticiones cada uno · el ritmo lo marca el niño · nunca lo fuerces a nada.",
+  lema: "Un niño que ama el agua aprenderá a nadar.",
+
+  /* Cómo funciona una clase. Esto aplica a los tres niveles. */
+  comoFunciona: {
+    titulo: "Cómo funciona una clase SafeWave",
+    puntos: [
+      ["30 minutos exactos","Igual en los tres niveles. Ni más ni menos."],
+      ["3 ejercicios + 1 juego","Tres ejercicios de aprendizaje y el juego SIEMPRE de último. El juego no es relleno: es parte de la clase."],
+      ["7-8 repeticiones por ejercicio","Las repeticiones son el reloj. 3 ejercicios × 7-8 reps llenan los 30 minutos solos. Si vas contando, vas bien de tiempo."],
+      ["Un foco por clase","Se alterna: un día sumersión, otro día flotación, otro patada. A veces sumersión y patada caen el mismo día."],
+      ["La patada casi nunca va sola","Va metida dentro de los ejercicios de sumersión, o cuando llegan a la pared. Ahí es donde más pega."],
+      ["Casi siempre un niño","A veces dos. Con dos, alterna en bloques cortos y dale al que espera algo que hacer."],
+      ["Al llegar a la casa","Se entra por el lado de la casa, directo a la piscina. No se pasa por dentro de la casa."],
+      ["Al terminar, el feedback","Nunca te vayas sin hablar con los papás. Les cuentas cómo viste al niño, qué se puede mejorar, qué hay que tener en cuenta y qué se va a trabajar. Esto no es opcional: es lo que hace que el cliente sienta que hay un proceso."]
+    ],
+    clave: "La clase gratuita no cuenta dentro de las 10. El paquete empieza después de esa."
+  },
+
+  /* ---------------------------------------------------------------------
+     LOS TRES NIVELES
+     Cada nivel tiene: cajones de ejercicios (ordenados de fácil a difícil),
+     juegos de cierre, una ruta sugerida de 10 clases, y criterios de avance.
+     --------------------------------------------------------------------- */
+  niveles: [
+    {
+      n:1, clave:"n1", titulo:"Nivel 1 — Inicial", sub:"Adaptación · Sumersión y flotación",
+      intro:"El objetivo es confianza y amor por el agua, no técnica. Cuántas clases suaves haces al principio depende del niño: si es miedoso, vas suave suave y aumentas de a poco; si es suelto, con la clase de adaptación basta y sigues con estructura.",
+      cajones:[
+        { tipo:"Sumersión", nota:"Van de más fácil a más difícil. No pases al siguiente hasta que el de antes salga sin resistencia.",
+          ejs:[
+            ["Meter orejita","El primer contacto. Solo la oreja al agua, nada más. Aquí empieza todo."],
+            ["Meter carita","Ya con la cara completa. Sin prisa, hasta que lo haga sin pelear."],
+            ["Mete carita y sube carita","Cuando ya controla la respiración. Mete, sube, mete, sube — así agarra el ritmo."],
+            ["Mete carita y lo volteo","Mete carita, lo volteo a flotación, mete carita, lo volteo. Repetido."],
+            ["Salta de la pared y lo volteo","Salta desde la pared, cae al agua, y lo volteo apenas cae."],
+            ["Círculo por debajo del agua","Lo sumerjo, le hago un círculo completo por debajo, y al final lo volteo."],
+            ["Manos de flechita a la pared","Manos de flecha, se impulsa y llega hasta la pared."],
+            ["Nadar por debajo hasta la pared","Ya sin apoyo: se sumerge y llega nadando por debajo hasta la pared."],
+            ["★ Muñeco abajo + cabeza atrás","Agarra el muñeco por debajo y le digo que tire la cabeza para atrás, yo apoyándolo. Lo agarro para que al subir quede en espalda. Este es donde más aprenden — de todos los del nivel, este es el que más rinde."]
+          ]},
+        { tipo:"Flotación", nota:"Empieza siempre con mi cuerpo como apoyo y voy soltando de a poco.",
+          ejs:[
+            ["En mi pecho","Lo coloco sobre mi pecho. El primer flotar, conmigo de apoyo."],
+            ["De las axilas, lo llevo","Lo agarro de las axilas con mis manos y lo llevo de un lugar a otro."],
+            ["Sumergir, sacar y cabeza atrás","Lo sumerjo un poco, lo saco y le tiro la cabeza para atrás."],
+            ["Salida de espalda hasta mí","Sale de espalda desde la pared y llega donde mí, con un flotador arriba de él."],
+            ["Rotación de 3 segundos","Mete carita 3 seg, se voltea, 3 seg, se voltea. Este ya es el puente al Nivel 2."]
+          ]},
+        { tipo:"Patada", nota:"Ojo: la patada casi nunca es un ejercicio aparte. La practico dentro de los ejercicios de sumersión y cuando llegan a la pared.",
+          ejs:[
+            ["Palo flotador en las axilas","El palo flotador va en las axilas y llega hasta mí dando patada."]
+          ]}
+      ],
+      juegos:[
+        ["Agarrar aritos por debajo","Tiro todos los aros al fondo y que los agarren."],
+        ["Aros en línea","Los coloco en línea y los va agarrando en orden. Trabaja resistencia."],
+        ["Aros en figura","En círculo o formando figuras. Cambia el reto sin cambiar el juego."],
+        ["Salta, agarra el arito y a la pared","Salta, agarra un arito y llega hasta la pared."],
+        ["Hula hula a la pared","Saltan por el hula hula y llegan a la pared. Les gusta muchísimo."]
+      ],
+      ruta:[
+        ["Adaptación",["Palo flotador en las axilas","Meter orejita","En mi pecho"],"Agarrar aritos por debajo"],
+        ["Sumersión inicial",["Meter orejita","Meter carita","Palo flotador en las axilas"],"Aros en línea"],
+        ["Flotación inicial",["En mi pecho","De las axilas, lo llevo","Meter carita"],"Aros en figura"],
+        ["Sumersión + patada",["Meter carita","Palo flotador en las axilas","Mete carita y lo volteo"],"Salta, agarra el arito y a la pared"],
+        ["Flotación",["Sumergir, sacar y cabeza atrás","De las axilas, lo llevo","Mete carita y sube carita"],"Hula hula a la pared"],
+        ["Sumersión y respiración",["Mete carita y sube carita","Salta de la pared y lo volteo","Palo flotador en las axilas"],"Agarrar aritos por debajo"],
+        ["Flotación y espalda",["Sumergir, sacar y cabeza atrás","Salida de espalda hasta mí","★ Muñeco abajo + cabeza atrás"],"Aros en línea"],
+        ["Sumersión a la pared",["Manos de flechita a la pared","Círculo por debajo del agua","Mete carita y lo volteo"],"Salta, agarra el arito y a la pared"],
+        ["Espalda y rotación",["★ Muñeco abajo + cabeza atrás","Salida de espalda hasta mí","Rotación de 3 segundos"],"Hula hula a la pared"],
+        ["Repaso y evaluación",["Nadar por debajo hasta la pared","Rotación de 3 segundos","Manos de flechita a la pared"],"Aros en figura"]
+      ],
+      criterios:[
+        "Mete la cara completa sin resistencia",
+        "Tira la cabeza para atrás y queda en espalda con poco apoyo",
+        "Llega a la pared con manos de flechita",
+        "Hace la rotación de 3 segundos (carita — voltea — carita)"
+      ]
+    },
+    {
+      n:2, clave:"n2", titulo:"Nivel 2 — Medio", sub:"La tabla · Técnica de libre y espalda",
+      intro:"Aquí entra la tabla y empieza la técnica de verdad. Se intercala igual que en Nivel 1: un día tabla para trabajar sobre todo patada, y otro día flotación y espalda. La rotación entra entre la clase 4 y la 5, y ahí arranca la técnica.",
+      cajones:[
+        { tipo:"Tabla y patada", nota:"Estos tres son los principales del arranque del nivel. La tabla es la herramienta de todo Nivel 2.",
+          ejs:[
+            ["Manitos arriba de la tabla","Agarra la tabla con las manos encima y va dando la patadita."],
+            ["Manitos abajo de la tabla","Manos debajo de la tabla, mete carita y sube carita. Control de respiración."],
+            ["Brazos en flechita a la pared","Brazos adelante en flechita hasta llegar a la pared."],
+            ["Rotación de cuerpo con tabla","Rotación de cuerpo y meter carita. Entra entre la clase 4 y la 5 — aquí es donde arranca la técnica."],
+            ["Resistencia con distancia","Más adelante en el nivel: distancias largas, que se sumerjan bastante, que lleguen hasta mí desde la mitad de la piscina."]
+          ]},
+        { tipo:"Técnica de libre", nota:"Así es como yo se los explico. Usa estas mismas palabras — los niños las entienden de una.",
+          ejs:[
+            ["★ Brazo de mamá y brazo de papá","Le digo: tenemos dos bracitos, uno es de mamá y otro es de papá. Con el de mamá respiramos, y con el de papá NO respiramos, bloqueamos. Se practica con la tabla hasta que lo agarren."],
+            ["El arcoíris","Meter carita sin respirar moviendo los bracitos: brazo de mamá, brazo de papá, en forma de arcoíris. Un arcoíris grande."]
+          ]},
+        { tipo:"Espalda", nota:"La espalda entra a mitad del nivel. Lo de mover bracitos guiado va como en la clase 8.",
+          ejs:[
+            ["Posición de salida en espalda","La salida, ya en espalda."],
+            ["Carita 3 segundos y se voltea","Mete la carita 3 segundos y se voltea completamente."],
+            ["Flotador y viene de espalda","Agarrando el flotador y viniendo de espalda."],
+            ["Flotador y mover bracitos","Con flotador, mueve los bracitos en espalda guiado por la profesora. Aquí va la corrección de patada."],
+            ["Muñequito en la frente","Le coloco un muñequito en la frente y tiene que hacer patada de espalda sin que se le caiga. Trabaja el equilibrio de espalda."]
+          ]},
+        { tipo:"Clavados", nota:"Solo al final del nivel, clases 9 y 10.",
+          ejs:[["Saltos y clavados","En Nivel 2 ya empiezan los saltos, o sea clavados."]]}
+      ],
+      juegos:[
+        ["Llevar aros de un lugar a otro","Ya no es solo agarrarlos: los tiene que transportar. Trabaja resistencia."],
+        ["Aros a la profundidad","Tiro los aros más fuerte para que tengan que ir hasta el fondo."],
+        ["Saltar en el hula hula","Uno a uno, saltando por el hula hula."],
+        ["Competencia","Ya en este nivel aguantan competir. Los motiva muchísimo."]
+      ],
+      ruta:[
+        ["Tabla y patada",["Manitos arriba de la tabla","Manitos abajo de la tabla","Brazos en flechita a la pared"],"Llevar aros de un lugar a otro"],
+        ["Flotación y espalda",["Posición de salida en espalda","Carita 3 segundos y se voltea","Flotador y viene de espalda"],"Aros a la profundidad"],
+        ["Tabla y patada",["Manitos arriba de la tabla","Manitos abajo de la tabla","Brazos en flechita a la pared"],"Saltar en el hula hula"],
+        ["Rotación",["Rotación de cuerpo con tabla","Manitos abajo de la tabla","Brazos en flechita a la pared"],"Llevar aros de un lugar a otro"],
+        ["Rotación y técnica",["Rotación de cuerpo con tabla","★ Brazo de mamá y brazo de papá","Manitos arriba de la tabla"],"Competencia"],
+        ["Técnica de libre",["★ Brazo de mamá y brazo de papá","El arcoíris","Manitos abajo de la tabla"],"Aros a la profundidad"],
+        ["Espalda",["Flotador y viene de espalda","Carita 3 segundos y se voltea","Posición de salida en espalda"],"Saltar en el hula hula"],
+        ["Espalda guiada",["Flotador y mover bracitos","Muñequito en la frente","El arcoíris"],"Llevar aros de un lugar a otro"],
+        ["Resistencia y clavados",["Resistencia con distancia","Saltos y clavados","El arcoíris"],"Competencia"],
+        ["Repaso y evaluación",["Saltos y clavados","★ Brazo de mamá y brazo de papá","Flotador y mover bracitos"],"Competencia"]
+      ],
+      criterios:["Domina el estilo libre"]
+    },
+    {
+      n:3, clave:"n3", titulo:"Nivel 3 — Avanzado", sub:"Técnica de libre y de espalda",
+      intro:"Aquí ya es todo técnica: se alterna técnica de libre y técnica de espalda. Entran los palos y se pule lo que ya sabe hacer.",
+      cajones:[
+        { tipo:"Técnica de libre", nota:"Ya no se trata de que avance, sino de cómo avanza.",
+          ejs:[
+            ["Respirar con una sola mano","Mueve un solo brazo y respira de ese lado."],
+            ["Respirar cada 3 o 4 brazadas","Ya con las dos manos, controlando cada cuánto respira."]
+          ]},
+        { tipo:"Con palos (pull buoy)", nota:"Los palos son la herramienta nueva de este nivel.",
+          ejs:[
+            ["★ Palo atrás, mete y sube cara","Pone las manos atrás sujetando el palo, mete cara y sube cara."],
+            ["Palo entre las piernas","Se lo coloca entre las piernas y hace estilo libre. Solo brazos."]
+          ]},
+        { tipo:"Técnica de espalda", nota:"",
+          ejs:[
+            ["Rotación del cuerpo en espalda","Rotación del cuerpo estando en espalda."],
+            ["Una manito","Empezar a mover una sola mano."],
+            ["Las dos manitos","Ya con las dos manos coordinadas."],
+            ["Corrección de patada de espalda","Corregir la patada específica de espalda."],
+            ["Muñequito en la frente","Le coloco un muñequito en la frente y tiene que hacer patada de espalda sin que se le caiga. Trabaja el equilibrio de espalda."]
+          ]},
+        { tipo:"Rotación completa", nota:"Es la rotación de Nivel 1 y 2, pero completa. Aquí se ve todo junto.",
+          ejs:[
+            ["Rotación completa","Espalda, luego de un lado, luego cabeza, luego del otro lado, y al final metemos cara."]
+          ]}
+      ],
+      juegos:[
+        ["Aros al fondo","Aros para que se sumerjan a buscarlos."],
+        ["Esconder los aros","Les escondo los aros y ellos tienen que encontrarlos."]
+      ],
+      ruta:[
+        ["Técnica de libre",["Respirar con una sola mano","Respirar cada 3 o 4 brazadas","★ Palo atrás, mete y sube cara"],"Aros al fondo"],
+        ["Técnica de espalda",["Rotación del cuerpo en espalda","Una manito","Corrección de patada de espalda"],"Esconder los aros"],
+        ["Libre con palos",["★ Palo atrás, mete y sube cara","Palo entre las piernas","Respirar con una sola mano"],"Aros al fondo"],
+        ["Espalda",["Una manito","Las dos manitos","Rotación del cuerpo en espalda"],"Esconder los aros"],
+        ["Libre y respiración",["Respirar cada 3 o 4 brazadas","Palo entre las piernas","Respirar con una sola mano"],"Aros al fondo"],
+        ["Espalda completa",["Las dos manitos","Muñequito en la frente","Corrección de patada de espalda"],"Esconder los aros"],
+        ["Rotación completa",["Rotación completa","Las dos manitos","Respirar cada 3 o 4 brazadas"],"Aros al fondo"],
+        ["Libre pulido",["★ Palo atrás, mete y sube cara","Palo entre las piernas","Respirar cada 3 o 4 brazadas"],"Esconder los aros"],
+        ["Rotación y espalda",["Rotación completa","Corrección de patada de espalda","Las dos manitos"],"Aros al fondo"],
+        ["Repaso y graduación",["Rotación completa","Respirar cada 3 o 4 brazadas","Las dos manitos"],"Esconder los aros"]
+      ],
+      criterios:["Ya sabe libre","Está perfeccionando espalda"]
+    }
+  ],
+
+  /* ---------------------------------------------------------------------
+     ¿QUÉ HAGO SI…? — las situaciones difíciles, resueltas como las resuelve Juanita
+     --------------------------------------------------------------------- */
+  protocolos: [
+    { s:"El niño llora",
+      pasos:[
+        "Para la clase. No sigas con el ejercicio a ver si se le pasa.",
+        "Siéntalo un rato, o pónganse a jugar mientras se tranquiliza.",
+        "Hazle mover el agua para que la escuche — el sonido del agua los relaja.",
+        "Tírale agüita en la cabeza, suave.",
+        "Cuando ya esté calmado, retoman."
+      ],
+      nunca:"La idea es calmarlo para poder tener una buena clase, no terminar el ejercicio a la fuerza." },
+
+    { s:"No quiere entrar al agua",
+      pasos:[
+        "Quédate un rato ahí afuera con él. No lo apures.",
+        "Sácale los muñequitos: que los tire, que los lance.",
+        "Deja que pase sus primeros minutos agradables. Eso es lo que importa.",
+        "Después mira si lo puedes meter y cómo reacciona.",
+        "Si está relajado, empiezan la clase normal."
+      ],
+      nunca:"Si se altera demasiado, demasiado — ahí sí que entre el papá al agua. Pero eso es por las últimas, no la primera opción." },
+
+    { s:"Traga agua o se atraganta",
+      pasos:[
+        "Paren un momentico.",
+        "Que se siente.",
+        "Que se relaje.",
+        "Que alce las manitos y que respire.",
+        "Vuelvan a intentarlo, pero un poco más suave que antes."
+      ],
+      nunca:"" },
+
+    { s:"Los papás durante la clase",
+      pasos:[
+        "Los papás tienen que estar alejados. Lo ideal es que miren desde afuera.",
+        "La excepción: un niño que de verdad necesita al papá para adaptarse — está muy alterado, tiene demasiado miedo, no deja de llorar.",
+        "En ese caso sí entran, pero solo en las primeras clases."
+      ],
+      nunca:"" },
+
+    { s:"El niño retrocedió",
+      pasos:[
+        "Volvemos a agarrar su confianza.",
+        "Jugamos un poco.",
+        "Le vuelves a mostrar los ejercicios, pero contigo — que te sienta cerca.",
+        "Y lo vas soltando poco a poco, como al principio."
+      ],
+      nunca:"No lo fuerces a nada. Si lo fuerzas, se va a alterar mucho más." }
+  ],
+
+  /* ---------------------------------------------------------------------
+     LAS SEÑALES — las frases de Juanita. Úsalas tal cual, los niños ya las entienden.
+     --------------------------------------------------------------------- */
+  senales: [
+    ["«Patada de soldado»","Cuando dobla mucho la patada o la abre demasiado. Quiere decir: patada estirada, derecha."],
+    ["«Corta la pizza»","Para que mueva los bracitos en círculo."],
+    ["«Sopla la vela»","Para enseñarle a hacer burbujas."]
+  ],
+
+  /* ---------------------------------------------------------------------
+     ERRORES COMUNES — qué se ve, cómo se corrige
+     --------------------------------------------------------------------- */
+  errores: [
+    { area:"Patada", items:[
+      { e:"Dobla mucho la patada o la abre demasiado",
+        senal:"La patada se ve doblada o muy abierta, y casi no avanza.",
+        cor:"La patada tiene que ser estirada, derecha.",
+        frase:"«Hazme patada de soldado.»" }]},
+
+    { area:"Brazada de libre", items:[
+      { e:"Le cuesta el brazo de mamá",
+        senal:"De los dos bracitos, con el de respirar es con el que más pelea.",
+        cor:"Trabajarle mucho el alineamiento del cuerpo hasta que logre respirar bien de ese lado.",
+        frase:"«Corta la pizza» — para que el bracito vaya en círculo." }]},
+
+    { area:"Respiración", items:[
+      { e:"Pasar a la nariz demasiado pronto",
+        senal:"Este error es del instructor, no del niño. La respiración tiene un orden y hay que respetarlo.",
+        cor:"Principiantes respiran por la boquita. Por la nariz solo después de unas 8 clases, o cuando ya ves al niño más avanzado.",
+        frase:"«Sopla la vela» — para enseñarle las burbujas." }]},
+
+    { area:"Espalda", items:[
+      { e:"Se hunde",
+        senal:"Nada casi sentado y se va para abajo.",
+        cor:"Enseñarle a sacar más pecho, a aguantar la respiración y a tirar bien la cabeza para atrás. El ejercicio del muñequito en la frente es el que mejor arregla esto.",
+        frase:"" }]},
+
+    { area:"Sumersión", items:[
+      { e:"No cierra la boca",
+        senal:"Mete la cara con la boca abierta. Pasa mucho en los chiquitos de Nivel 1.",
+        cor:"Volver a trabajarle mucho la orejita hasta que controle la boquita.",
+        frase:"" }]}
+  ]
+};
+/* ================= FIN DE LA ZONA EDITABLE ============================== */
+
+
+/* ---- Motor: dibuja el manual a partir de DATOS. No hace falta tocarlo. ---- */
+const $=(s,c=document)=>c.querySelector(s), esc=t=>String(t).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+const flecha='<svg class="flecha" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const tick='<svg class="tick" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="m8 12 3 3 5-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const plegable=(t,c,cl='',ex='')=>`<div class="tarjeta ${cl}"><button class="cab" aria-expanded="false">${ex}${t}${flecha}</button><div class="cuerpo">${c}</div></div>`;
+const listaEjs=ejs=>`<ul class="ejs">${ejs.map((e,i)=>
+  `<li class="${e[0].startsWith('★')?'estrella':''}"><span class="punto">${e[0].startsWith('★')?'★':i+1}</span>
+   <span><span class="nom">${esc(e[0].replace(/^★\s*/,''))}</span><span class="como">${esc(e[1])}</span></span></li>`).join('')}</ul>`;
+
+function pintarClases(){
+  const cf = DATOS.comoFunciona;
+  const intro = plegable(esc(cf.titulo),
+    `${listaEjs(cf.puntos)}<div class="aviso"><b>Ojo</b>${esc(cf.clave)}</div>`);
+
+  const niveles = DATOS.niveles.map(nv=>{
+    const partes=[`<p class="intro">${esc(nv.intro)}</p>`];
+
+    if(nv.ruta.length) partes.push(plegable('Ruta sugerida de 10 clases',
+      `<div class="aviso"><b>Es una sugerencia, no una regla</b>Si el niño va más lento, repite la clase. Si va suelto, sáltate adelante. El orden de los ejercicios en cada cajón es lo que manda.</div>` +
+      nv.ruta.map((c,i)=>`<div class="clase-r"><h4>Clase ${i+1}</h4><span class="foco">${esc(c[0])}</span>
+        <ol>${c[1].map(e=>`<li>${esc(e.replace(/^★\s*/,''))}</li>`).join('')}</ol>
+        ${c[2]?`<span class="jg">Juego de cierre: ${esc(c[2])}</span>`:''}</div>`).join(''),
+      'sub', '<span class="etiq">Ruta</span>'));
+
+    nv.cajones.forEach(cj=>partes.push(plegable(esc(cj.tipo),
+      listaEjs(cj.ejs) + (cj.nota?`<div class="nota"><b>Ten en cuenta</b>${esc(cj.nota)}</div>`:''),
+      'sub', '<span class="etiq">Ejercicios</span>')));
+
+    if(nv.juegos.length) partes.push(plegable('Juegos de cierre', listaEjs(nv.juegos),
+      'sub', '<span class="etiq">Juegos</span>'));
+
+    if(nv.criterios.length) partes.push(plegable('Para pasar al siguiente nivel',
+      `<ul class="check">${nv.criterios.map(c=>`<li>${tick}<span>${esc(c)}</span></li>`).join('')}</ul>`,
+      'sub', '<span class="etiq">Avance</span>'));
+
+    const falta=[];
+    if(!nv.ruta.length)      falta.push('la ruta de 10 clases');
+    if(!nv.juegos.length)    falta.push('los juegos de cierre');
+    if(!nv.criterios.length) falta.push('los criterios para pasar de nivel');
+    if(falta.length) partes.push(`<div class="aviso"><b>Falta completar</b>A este nivel todavía le ${falta.length>1?'faltan':'falta'} ${falta.join(', ').replace(/, ([^,]*)$/,' y $1')}.</div>`);
+
+    return plegable(`<span class="nivel-txt"><span class="t">${esc(nv.titulo)}</span><span class="s">${esc(nv.sub)}</span></span>`,
+      partes.join(''), `nivel ${nv.clave}`, `<span class="insignia">${nv.n}</span>`);
+  }).join('');
+
+  $('#v-clases').innerHTML = intro + niveles;
+}
+
+function pintarPendiente(sel, titulo, texto, bloque){
+  $(sel).innerHTML = `<div class="tarjeta"><div class="pend"><strong>${titulo}</strong>${texto}
+    <span>Bloque ${bloque} de la entrevista</span></div></div>`;
+}
+
+function pintarErrores(){
+  if(!DATOS.errores.length) return pintarPendiente('#v-errores','Errores comunes',
+    'Aquí van los errores que más ves en el agua, cómo los detectas y cómo los corriges — con las palabras que tú usas con los niños.', 6);
+  const senales = plegable('Tus señales',
+    `<div class="aviso"><b>Úsalas tal cual</b>Estas son las frases de Juanita. Los niños ya las entienden — no las cambies por explicaciones largas.</div>` +
+    listaEjs(DATOS.senales), 'senales');
+  $('#v-errores').innerHTML = senales + DATOS.errores.map(g=>plegable(esc(g.area),
+    g.items.map(it=>`<div class="err"><h4>${esc(it.e)}</h4><dl><dt>Señal</dt><dd>${esc(it.senal)}</dd>
+      <dt>Corrige</dt><dd>${esc(it.cor)}</dd>${it.frase?`<dt>Dile</dt><dd>${esc(it.frase)}</dd>`:''}</dl></div>`).join(''))).join('');
+}
+
+function pintarAyuda(){
+  if(!DATOS.protocolos.length) return pintarPendiente('#v-ayuda','¿Qué hago si…?',
+    'Aquí van las situaciones difíciles: el niño llora, no quiere entrar, traga agua, los papás se meten. Con lo que tú haces de verdad y lo que tú dices.', 5);
+  $('#v-ayuda').innerHTML = DATOS.protocolos.map(p=>plegable(esc(p.s),
+    `<ol class="paso">${p.pasos.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>` +
+    (p.nunca?`<div class="nunca"><b>Ojo con esto</b>${esc(p.nunca)}</div>`:''),'ayuda')).join('');
+}
+
+/* ---- Navegación ---- */
+const ICO={
+  clases:'<path d="M4 5h16M4 12h16M4 19h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>',
+  errores:'<path d="M12 8v5M12 16.5v.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.2"/>',
+  ayuda:'<path d="M12 21s-8-4.7-8-10a4.6 4.6 0 0 1 8-3.1A4.6 4.6 0 0 1 20 11c0 5.3-8 10-8 10Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>'
+};
+const TABS=[['clases','Clases'],['errores','Errores'],['ayuda','Ayuda']];
+$('#nav').innerHTML = TABS.map(([id,t],i)=>
+  `<button data-t="${id}" ${id==='ayuda'?'class="sos"':''} aria-current="${i===0}">
+     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">${ICO[id]}</svg>${t}</button>`).join('');
+function ir(id){
+  document.querySelectorAll('.vista').forEach(v=>v.classList.toggle('activa', v.id==='v-'+id));
+  document.querySelectorAll('#nav button').forEach(b=>b.setAttribute('aria-current', String(b.dataset.t===id)));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+$('#nav').addEventListener('click', e=>{const b=e.target.closest('button'); if(b) ir(b.dataset.t);});
+
+/* ---- Acordeones ---- */
+document.addEventListener('click', e=>{
+  const b=e.target.closest('.cab'); if(!b) return;
+  const ab = b.getAttribute('aria-expanded')==='true';
+  b.setAttribute('aria-expanded', String(!ab));
+  b.nextElementSibling.classList.toggle('abierto', !ab);
+});
+
+/* ---- Buscador: filtra y dice en qué pestaña sí hay resultados ---- */
+$('#q').addEventListener('input', e=>{
+  const q=e.target.value.trim().toLowerCase(), activo=q.length>1, cuenta={};
+  document.querySelectorAll('.vista').forEach(v=>{
+    let n=0;
+    v.querySelectorAll(':scope > .tarjeta').forEach(t=>{
+      const oc = activo && !t.textContent.toLowerCase().includes(q);
+      t.classList.toggle('oculto', oc); if(!oc) n++;
+    });
+    cuenta[v.id.slice(2)]=n;
+  });
+  document.querySelectorAll('.vista').forEach(v=>{
+    const vc=v.querySelector('.vacio'); if(vc) vc.remove();
+    if(!activo || cuenta[v.id.slice(2)]) return;
+    const otras=TABS.filter(([id])=>cuenta[id]>0);
+    v.insertAdjacentHTML('beforeend', otras.length
+      ? `<p class="vacio">Aquí no hay nada sobre «${esc(q)}».<br>Está en:
+         ${otras.map(([id,t])=>`<button class="salto" data-t="${id}">${t} (${cuenta[id]})</button>`).join(' ')}</p>`
+      : `<p class="vacio">No encontré nada sobre «${esc(q)}».<br>Prueba con otra palabra.</p>`);
+  });
+});
+document.addEventListener('click', e=>{const s=e.target.closest('.salto'); if(s) ir(s.dataset.t);});
+
+/* ---- Arranque ---- */
+$('#regla').textContent = DATOS.regla;
+$('#lema').textContent  = DATOS.lema;
+pintarClases(); pintarErrores(); pintarAyuda();
+</script>
+</body>
+</html>
