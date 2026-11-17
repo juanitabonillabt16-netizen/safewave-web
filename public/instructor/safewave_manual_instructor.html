@@ -13,7 +13,9 @@
 :root{
   /* Paleta oscura SafeWave — los mismos colores del Portal de Padres */
   --bg:#0a0a14; --crema:#242438; --tinta:#ecedf6; --oceano:#8b8ff8; --verde:#7ee0a8;
-  --n1:#6ddb9e; --n2:#6ba4f7; --n3:#b98cf8; --coral:#f87a63; --ambar:#f0c674; --agua:#8fb6bd;
+  /* n1 verde · n2 ámbar (Autorrescate, el nivel nuevo) · n3 azul · n4 morado
+     Fundamentos e Independencia conservan el azul y el morado de siempre. */
+  --n1:#6ddb9e; --n2:#f0a94a; --n3:#6ba4f7; --n4:#b98cf8; --coral:#f87a63; --ambar:#f0c674; --agua:#8fb6bd;
   --papel:#14141f; --linea:#2b2b3d; --suave:#9a99ac;
   --r-sm:10px; --r-md:16px; --r-lg:22px;
   --e:cubic-bezier(.16,1,.3,1);
@@ -80,6 +82,7 @@ h1{font-size:clamp(28px,8vw,38px);line-height:1.05;margin:12px 0 6px;letter-spac
 .n1 .insignia{background:var(--n1)} .n1{border-color:var(--n1)} .n1 .cab .t{color:var(--n1)}
 .n2 .insignia{background:var(--n2)} .n2{border-color:var(--n2)} .n2 .cab .t{color:var(--n2)}
 .n3 .insignia{background:var(--n3)} .n3{border-color:var(--n3)} .n3 .cab .t{color:var(--n3)}
+.n4 .insignia{background:var(--n4)} .n4{border-color:var(--n4)} .n4 .cab .t{color:var(--n4)}
 .intro{font-size:15.5px;color:var(--suave);padding:15px 0 4px;line-height:1.5}
 
 /* ---------- Sub-bloques dentro del nivel ---------- */
@@ -217,7 +220,7 @@ const DATOS = {
   comoFunciona: {
     titulo: "Cómo funciona una clase SafeWave",
     puntos: [
-      ["30 minutos exactos","Igual en los tres niveles. Ni más ni menos."],
+      ["30 minutos exactos","Igual en los cuatro niveles. Ni más ni menos."],
       ["3 ejercicios + 1 juego","Tres ejercicios de aprendizaje y el juego SIEMPRE de último. El juego no es relleno: es parte de la clase."],
       ["7-8 repeticiones por ejercicio","Las repeticiones son el reloj. 3 ejercicios × 7-8 reps llenan los 30 minutos solos. Si vas contando, vas bien de tiempo."],
       ["Un foco por clase","Se alterna: un día sumersión, otro día flotación, otro patada. A veces sumersión y patada caen el mismo día."],
@@ -230,13 +233,13 @@ const DATOS = {
   },
 
   /* ---------------------------------------------------------------------
-     LOS TRES NIVELES
+     LOS CUATRO NIVELES
      Cada nivel tiene: cajones de ejercicios (ordenados de fácil a difícil),
      juegos de cierre, una ruta sugerida de 10 clases, y criterios de avance.
      --------------------------------------------------------------------- */
   niveles: [
     {
-      n:1, clave:"n1", titulo:"Nivel 1 — Inicial", sub:"Adaptación · Sumersión y flotación",
+      n:1, clave:"n1", titulo:"Nivel 1 — Adaptación", sub:"Perderle el miedo · Sumersión y flotación",
       intro:"El objetivo es confianza y amor por el agua, no técnica. Cuántas clases suaves haces al principio depende del niño: si es miedoso, vas suave suave y aumentas de a poco; si es suelto, con la clase de adaptación basta y sigues con estructura.",
       cajones:[
         { tipo:"Sumersión", nota:"Van de más fácil a más difícil. No pases al siguiente hasta que el de antes salga sin resistencia.",
@@ -291,8 +294,58 @@ const DATOS = {
       ]
     },
     {
-      n:2, clave:"n2", titulo:"Nivel 2 — Medio", sub:"La tabla · Técnica de libre y espalda",
-      intro:"Aquí entra la tabla y empieza la técnica de verdad. Se intercala igual que en Nivel 1: un día tabla para trabajar sobre todo patada, y otro día flotación y espalda. La rotación entra entre la clase 4 y la 5, y ahí arranca la técnica.",
+      n:2, clave:"n2", titulo:"Nivel 2 — Autorrescate", sub:"Si se cae, sabe qué hacer",
+      intro:"Este nivel no enseña a nadar: enseña a no ahogarse. Todo sale de dos ejercicios que ya haces en Nivel 1 — el muñeco con cabeza atrás y la rotación de 3 segundos. La diferencia es que aquí el niño los hace SOLO, sin tu mano encima. Se alterna igual que siempre: un día pared, otro día giro, otro día flotación. Si un niño alcanzara a hacer un solo nivel contigo en la vida, que sea este.",
+      cajones:[
+        { tipo:"Pared y entrada", nota:"Lo primero que hace un niño que se cae es buscar por dónde salir. Esto es eso, entrenado.",
+          ejs:[
+            ["Entra y sale por la escalera","Que entre y salga sola por la escalera, sin que la cargues. Parece poquito, pero es la salida que va a buscar si se cae."],
+            ["Salta y vuelve a la pared, con apoyo","Salta desde el borde y la acompañas de vuelta a la pared. Todavía con tu mano."],
+            ["Salta y vuelve a la pared sola","Lo mismo, pero sin tocarla. Tú al lado, lista, sin ayudar."],
+            ["Cae de lado y se orienta","La dejas caer de lado, no de frente. Tiene que encontrar la pared sola. Así es como pasa de verdad: nadie se cae mirando a donde va."]
+          ]},
+        { tipo:"El giro", nota:"Este cajón es el corazón del nivel. Es tu ejercicio del muñeco de Nivel 1, pero soltándola.",
+          ejs:[
+            ["Rotación de 3 segundos","La misma del Nivel 1: mete carita 3 seg, se voltea, 3 seg, se voltea. Aquí se repasa para arrancar el nivel."],
+            ["Muñeco abajo + cabeza atrás, sin agarrarla","El mismo ejercicio estrella del Nivel 1, pero ya sin sostenerla. Solo le recuerdas: cabeza para atrás."],
+            ["★ Gira de pecho a espalda sola","Está boca abajo y se voltea a espalda sin ayuda ninguna. Esta es LA destreza del nivel. Si sale esta, la niña se salva."]
+          ]},
+        { tipo:"Flotación sola", nota:"Flotar sin saber pararse no le sirve para salir. Por eso el de ponerse de pie va en la mitad, no al final.",
+          ejs:[
+            ["Flota de espalda 10 segundos","Boca arriba, sin apoyo, contando 10 en voz alta. Empieza con tu mano cerca sin tocarla."],
+            ["Se pone de pie desde la flotación","Desde la espalda, que recoja las piernas y quede parada."],
+            ["Flota de espalda 30 segundos","Los mismos 30 segundos que va a necesitar si le toca esperar a que alguien llegue."],
+            ["Se sostiene 1 minuto donde no hace pie","En lo hondo, un minuto completo. Es la última del nivel y la más exigente."]
+          ]}
+      ],
+      juegos:[
+        ["La estrella de mar","Flota de espalda mientras cuentas en voz alta. La que aguante más, gana."],
+        ["Muñequito en la barriga","Flota de espalda con un muñequito en la barriga sin que se le caiga. Es el primo del muñequito en la frente."],
+        ["Aro lejos, vuelve a la pared","Tiras un aro lejos, va por él y tiene que volver sola a la pared."],
+        ["Salto sorpresa","Salta sin saber de qué lado le toca: de frente, de lado, sentada. Que aprenda a orientarse caiga como caiga."]
+      ],
+      ruta:[
+        ["Entrada y repaso",["Entra y sale por la escalera","Rotación de 3 segundos","Salta y vuelve a la pared, con apoyo"],"La estrella de mar"],
+        ["La pared",["Salta y vuelve a la pared, con apoyo","Entra y sale por la escalera","Muñeco abajo + cabeza atrás, sin agarrarla"],"Aro lejos, vuelve a la pared"],
+        ["El giro con apoyo",["Muñeco abajo + cabeza atrás, sin agarrarla","Rotación de 3 segundos","Flota de espalda 10 segundos"],"Muñequito en la barriga"],
+        ["Flotación corta",["Flota de espalda 10 segundos","Muñeco abajo + cabeza atrás, sin agarrarla","Salta y vuelve a la pared sola"],"La estrella de mar"],
+        ["★ El giro sola",["★ Gira de pecho a espalda sola","Flota de espalda 10 segundos","Rotación de 3 segundos"],"Muñequito en la barriga"],
+        ["De pie desde el agua",["Se pone de pie desde la flotación","★ Gira de pecho a espalda sola","Salta y vuelve a la pared sola"],"Aro lejos, vuelve a la pared"],
+        ["Flotación larga",["Flota de espalda 30 segundos","Se pone de pie desde la flotación","★ Gira de pecho a espalda sola"],"La estrella de mar"],
+        ["La caída de verdad",["Cae de lado y se orienta","Salta y vuelve a la pared sola","Flota de espalda 30 segundos"],"Salto sorpresa"],
+        ["Donde no hace pie",["Se sostiene 1 minuto donde no hace pie","Cae de lado y se orienta","Flota de espalda 30 segundos"],"Salto sorpresa"],
+        ["Repaso y evaluación",["★ Gira de pecho a espalda sola","Se sostiene 1 minuto donde no hace pie","Cae de lado y se orienta"],"Salto sorpresa"]
+      ],
+      criterios:[
+        "Gira de pecho a espalda sin ayuda",
+        "Flota de espalda 30 segundos sola",
+        "Si cae al agua, vuelve sola a la pared",
+        "Se sostiene 1 minuto donde no hace pie"
+      ]
+    },
+    {
+      n:3, clave:"n3", titulo:"Nivel 3 — Fundamentos", sub:"La tabla · Técnica de libre y espalda",
+      intro:"Aquí entra la tabla y empieza la técnica de verdad. Llega sabiendo salvarse, así que ya puedes exigirle. Se intercala igual que en los niveles anteriores: un día tabla para trabajar sobre todo patada, y otro día flotación y espalda. La rotación con tabla entra entre la clase 4 y la 5, y ahí arranca la técnica.",
       cajones:[
         { tipo:"Tabla y patada", nota:"Estos tres son los principales del arranque del nivel. La tabla es la herramienta de todo Nivel 2.",
           ejs:[
@@ -339,7 +392,7 @@ const DATOS = {
       criterios:["Domina el estilo libre"]
     },
     {
-      n:3, clave:"n3", titulo:"Nivel 3 — Avanzado", sub:"Técnica de libre y de espalda",
+      n:4, clave:"n4", titulo:"Nivel 4 — Independencia", sub:"Técnica de libre y de espalda",
       intro:"Aquí ya es todo técnica: se alterna técnica de libre y técnica de espalda. Entran los palos y se pule lo que ya sabe hacer.",
       cajones:[
         { tipo:"Técnica de libre", nota:"Ya no se trata de que avance, sino de cómo avanza.",
