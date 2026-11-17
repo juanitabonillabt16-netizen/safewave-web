@@ -69,6 +69,14 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .sem-rango span{display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:12px;color:var(--text3);margin-top:1px}
 .sem-hoy{text-align:center;font-size:12px;color:var(--accent);cursor:pointer;margin-top:8px}
 
+/* CLASE EXTRA */
+.extra-card{background:var(--bg2);border:1px dashed var(--border2,rgba(139,143,248,.3));border-radius:16px;padding:18px;margin-top:28px}
+.extra-tit{font-family:'Poppins',sans-serif;font-weight:700;font-size:16px;color:var(--text)}
+.extra-sub{font-size:12px;color:var(--text3);margin:4px 0 14px;line-height:1.5}
+.extra-fila{display:flex;gap:9px;margin-bottom:8px}
+.extra-fila input{flex:1;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:14px;font-family:inherit;outline:none}
+.extra-nota{font-size:12px;color:var(--text3);text-align:center;padding:14px}
+
 /* DÍAS */
 .dia-head{display:flex;align-items:baseline;justify-content:space-between;margin:20px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
 .dia-head.dia-hoy{border-bottom-color:var(--accent)}
@@ -92,6 +100,8 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .b-comp{background:var(--green-bg);color:var(--green)}
 .b-canc{background:var(--red-bg);color:var(--red)}
 .b-rep{background:var(--purp-bg);color:var(--purp)}
+.b-extra{background:var(--blue-bg);color:var(--blue)}
+.c-badges{display:flex;gap:6px;align-items:flex-start;flex-shrink:0}
 .c-prog{font-size:12px;color:var(--text3);margin-bottom:12px}
 .c-contacto{background:var(--bg3);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:flex;flex-direction:column;gap:7px}
 .c-linea{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text);text-decoration:none}
@@ -309,8 +319,44 @@ function render(){
     }
   }
 
+  html+=seccionExtra(hoy);
+
   out.innerHTML=html;
   requestAnimationFrame(()=>document.querySelectorAll('.sfill').forEach(b=>b.style.width=b.dataset.w+'%'));
+}
+
+function seccionExtra(hoy){
+  const nombres=Object.keys(ALUMNOS).sort((a,b)=>a.localeCompare(b));
+  const cuerpo=nombres.length?`
+    <div class="c-row"><select id="ex-nin"><option value="">Elige el alumno…</option>${nombres.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')}</select></div>
+    <div class="extra-fila">
+      <input type="date" id="ex-fec" value="${hoy}">
+      <input type="time" id="ex-hora">
+    </div>
+    <div class="c-row"><input type="text" id="ex-nota" placeholder="Nota de la clase (opcional)"></div>
+    <div class="c-row"><button class="c-save" onclick="guardarExtra()">Guardar clase extra</button></div>
+    <div class="c-flash" id="ex-flash"></div>`
+    :'<div class="extra-nota">Cuando tengas alumnos asignados, aquí podrás apuntar una clase extra.</div>';
+  return `<div class="extra-card">
+    <div class="extra-tit">➕ Apuntar una clase extra</div>
+    <div class="extra-sub">Una clase que diste y no estaba agendada. Queda como Completada y suma a tus horas de la semana.</div>
+    ${cuerpo}
+  </div>`;
+}
+
+async function guardarExtra(){
+  const nin=document.getElementById('ex-nin').value;
+  const fec=document.getElementById('ex-fec').value;
+  const hora=document.getElementById('ex-hora').value;
+  const nota=document.getElementById('ex-nota').value.trim();
+  const flash=document.getElementById('ex-flash');
+  if(!nin){flash.textContent='Elige el alumno';flash.style.color='var(--amber)';return;}
+  if(!fec){flash.textContent='Elige la fecha';flash.style.color='var(--amber)';return;}
+  flash.textContent='Guardando…';flash.style.color='var(--text3)';
+  const r=await sb.rpc('agregar_clase_extra',{p_nin:nin,p_fec:fec,p_hora:hora,p_notas:nota});
+  if(r.error){flash.textContent='⚠️ '+r.error.message;flash.style.color='var(--red)';return;}
+  flash.textContent='✔ Clase extra guardada';flash.style.color='var(--green)';
+  setTimeout(()=>cargar(),800);
 }
 
 function inicioSemanaISO(baseIso){const x=new Date(baseIso+'T00:00:00');const off=(x.getDay()+6)%7;x.setDate(x.getDate()-off);return x.toISOString().split('T')[0];}
@@ -362,7 +408,7 @@ function tarjeta(c,hoy,atrasada){
         <div class="c-nombre">${escapeHtml(c.nin)}</div>
         <div class="c-meta">${fmtFecha(c.fec)} · ${fmtHora(c.hora)}${c.niv?' · '+escapeHtml(c.niv):''}</div>
       </div>
-      <span class="c-badge ${badgeClass(c.est)}">${c.est}</span>
+      <div class="c-badges">${c.extra?'<span class="c-badge b-extra">Extra</span>':''}<span class="c-badge ${badgeClass(c.est)}">${c.est}</span></div>
     </div>
     <div class="c-prog">${progTxt}</div>
     ${(alumno.zona||alumno.con)?`<div class="c-contacto">
